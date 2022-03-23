@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,8 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
+import java.util.Map;
 
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Library.HandyUserAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 
@@ -37,8 +40,8 @@ public class HandymenFragment extends Fragment {
             @Override
             public void onSuccess(List<HandyUser> result) {
                 handyUsers = result;
-                ArrayAdapter arrayAdapter = new ArrayAdapter(HandymenFragment.this.getActivity(), android.R.layout.simple_list_item_1, handyUsers);
-                listView.setAdapter(arrayAdapter);
+                HandyUserAdapter adapter = new HandyUserAdapter(HandymenFragment.this.getActivity(), handyUsers);
+                listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
