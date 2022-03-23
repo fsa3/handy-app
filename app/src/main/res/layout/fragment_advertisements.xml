@@ -3,21 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ads fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:id="@+id/ad_title"
+    <GridView
+        android:id="@+id/ads_gridview"
         android:layout_width="match_parent"
-        android:layout_height="219dp"
-        android:layout_marginBottom="367dp"
-        android:text="ad title"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:padding="50dp"/>
+        android:layout_height="match_parent"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:padding="10dp"
+        android:visibility="gone">
+    </GridView>
+
+    <ProgressBar
+        android:id="@+id/ads_progressbar"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
 </RelativeLayout>
