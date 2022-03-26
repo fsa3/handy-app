@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
@@ -74,7 +76,13 @@ public class HandymenFragment extends Fragment {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(HandymenFragment.this.getActivity() , mHandyUsers.get(i).getName(), Toast.LENGTH_SHORT).show();
+                        Fragment handyProfileFragment = new HandyProfileFragment(mHandyUsers.get(i));
+                        FragmentManager fragmentManager = HandymenFragment.this.getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, handyProfileFragment)
+                                .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
                     }
                 });
             }
