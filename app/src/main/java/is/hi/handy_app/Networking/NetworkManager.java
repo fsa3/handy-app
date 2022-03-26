@@ -49,46 +49,19 @@ public class NetworkManager {
         return sQueue;
     }
 
-    public void getAds(final NetworkCallback<List<Ad>> callback) {
-        StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "/ads", new Response.Listener<String>() {
+    public void sendRequest(String url, int method, NetworkCallback<String> callback) {
+        StringRequest request = new StringRequest(method, BASE_URL + url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Response: "+response);
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<Ad>>(){}.getType();
-                List<Ad> advertisements = gson.fromJson(response, listType);
-                callback.onSuccess(advertisements);
+                callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "Response: "+error.toString());
+                Log.d(TAG, error.toString());
                 callback.onaFailure(error.toString());
             }
-        }
-        );
-        sQueue.add(request);
-    }
-
-    public void getHandymen(NetworkCallback<List<HandyUser>> callback) {
-        StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "/handymen", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<HandyUser>>() {
-                }.getType();
-                List<HandyUser> handyUsers = gson.fromJson(response, listType);
-                callback.onSuccess(handyUsers);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onaFailure(error.toString());
-            }
-        }
-        );
+        });
         sQueue.add(request);
     }
 }
