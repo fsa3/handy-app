@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class HandymenFragment extends Fragment {
     private ListView mListView;
     private ProgressBar mProgressBar;
     private TextView mErrorText;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -45,7 +47,21 @@ public class HandymenFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.handymen_listview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.handymen_progressbar);
         mErrorText = (TextView) view.findViewById(R.id.handymen_error);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.handymen_swipe);
 
+        getHandymen();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getHandymen();
+            }
+        });
+
+        return view;
+    }
+
+    private void getHandymen() {
         mUserService.findAllHandyUsers(new NetworkCallback<List<HandyUser>>() {
             @Override
             public void onSuccess(List<HandyUser> result) {
@@ -53,6 +69,7 @@ public class HandymenFragment extends Fragment {
                 HandyUserAdapter adapter = new HandyUserAdapter(mContext, mHandyUsers);
                 mListView.setAdapter(adapter);
                 mProgressBar.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setRefreshing(false);
                 mListView.setVisibility(View.VISIBLE);
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -69,8 +86,5 @@ public class HandymenFragment extends Fragment {
                 mErrorText.setVisibility(View.VISIBLE);
             }
         });
-
-
-        return view;
     }
 }

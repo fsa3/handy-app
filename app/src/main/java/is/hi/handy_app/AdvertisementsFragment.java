@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class AdvertisementsFragment extends Fragment {
     private GridView mGridView;
     private ProgressBar mProgressBar;
     private TextView mErrorText;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -45,7 +47,21 @@ public class AdvertisementsFragment extends Fragment {
         mProgressBar = (ProgressBar) view.findViewById(R.id.ads_progressbar);
         mGridView = (GridView) view.findViewById(R.id.ads_gridview);
         mErrorText = (TextView) view.findViewById(R.id.ads_error);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.ads_swipe);
 
+        getAds();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAds();
+            }
+        });
+
+        return view;
+    }
+
+    private void getAds() {
         mAdService.findAll(new NetworkCallback<List<Ad>>() {
             @Override
             public void onSuccess(List<Ad> result) {
@@ -53,6 +69,7 @@ public class AdvertisementsFragment extends Fragment {
                 AdsAdapter adapter = new AdsAdapter(AdvertisementsFragment.this.getActivity(), mAds);
                 mGridView.setAdapter(adapter);
                 mProgressBar.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setRefreshing(false);
                 mGridView.setVisibility(View.VISIBLE);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -69,7 +86,5 @@ public class AdvertisementsFragment extends Fragment {
                 mErrorText.setVisibility(View.VISIBLE);
             }
         });
-
-        return view;
     }
 }

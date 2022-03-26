@@ -3,16 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridView
-        android:id="@+id/ads_gridview"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/ads_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:padding="10dp"
-        android:visibility="gone">
-    </GridView>
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/ads_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="10dp"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:padding="10dp"
+            android:visibility="gone">
+        </GridView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/ads_progressbar"
