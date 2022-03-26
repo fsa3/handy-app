@@ -17,9 +17,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
+import java.util.Objects;
 
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Library.AdsAdapter;
@@ -74,7 +77,13 @@ public class AdvertisementsFragment extends Fragment {
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(mContext, mAds.get(i).getDescription(), Toast.LENGTH_SHORT).show();
+                        Fragment adFragment = new AdFragment(mAds.get(i));
+                        FragmentManager fragmentManager = AdvertisementsFragment.this.getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, adFragment)
+                                .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
                     }
                 });
             }
