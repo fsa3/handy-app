@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.databinding.FragmentLoginBinding;
 
 import is.hi.handy_app.R;
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((MainActivity) LoginFragment.this.requireActivity()).hideSearch();
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
