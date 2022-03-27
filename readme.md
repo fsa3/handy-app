@@ -1,7 +1,7 @@
 # Handy
 *Team 2 - product*
 
-![](app/src/main/res/drawable/handyicon_background.xml)
+![](app/src/main/res/mipmap-xhdpi/handyicon.png)
 
 **HBV501G Hugbúnaðarverkefni 2 - spring 2022**
 
@@ -18,7 +18,7 @@
 This repository contains the source code for the product Handy created by team 2 in
 Hugbúnaðarverkefni 2 2022.
 
-##Server needed to run the project ⚠️
+## Server needed to run the project ⚠️
 This project relies on the project [Handy](https://github.com/fsa3/handy) for data.
 By running both projects on the same computer, data from the server should be available in the mobile
 application.
