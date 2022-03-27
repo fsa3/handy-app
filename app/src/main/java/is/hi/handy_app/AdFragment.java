@@ -13,9 +13,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Base64;
-import java.util.Objects;
 
 import is.hi.handy_app.Entities.Ad;
 
@@ -57,6 +58,19 @@ public class AdFragment extends Fragment {
         mAdDate.setText(mAd.getFormattedDate());
         mAdDescription.setText(mAd.getDescription());
         mAdAdvertiser.setText(String.format(getResources().getString(R.string.posted_by), mAd.getUser().getName()));
+
+        mAdTrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment handymenFragment = new HandymenFragment(mAd.getTrade().toString());
+                FragmentManager fragmentManager = AdFragment.this.getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, handymenFragment)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
+        });
         return view;
     }
 }

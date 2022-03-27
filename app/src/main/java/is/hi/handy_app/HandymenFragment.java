@@ -48,6 +48,13 @@ public class HandymenFragment extends Fragment {
     private String mNameSearch = null;
     private String mTradeSearch = null;
 
+    public HandymenFragment() {
+    }
+
+    public HandymenFragment(String trade) {
+        mTradeSearch = trade;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +73,10 @@ public class HandymenFragment extends Fragment {
                     .collect(Collectors.toList());
         trades.add(0, "All trades");
         mTradeSpinner.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, trades));
+        if (mTradeSearch != null) {
+            int tradeIndex = trades.indexOf(mTradeSearch);
+            mTradeSpinner.setSelection(tradeIndex);
+        }
 
         getHandymen();
 
