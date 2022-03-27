@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mSearchView = (SearchView) mSearchMenu.getActionView();
 
         if (!mSearchVisible) {
+            mSearchMenu.collapseActionView();
             mSearchMenu.setVisible(false);
+            mSearchView.setVisibility(View.GONE);
         }
 
         if (mSearchHint != null && mSearchListener != null) {
@@ -100,13 +102,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mSearchView.setQueryHint(mSearchHint);
             mSearchView.setOnQueryTextListener(mSearchListener);
             mSearchMenu.setVisible(true);
+            mSearchView.setVisibility(View.VISIBLE);
         }
     }
 
     public void hideSearch() {
         mSearchVisible = false;
-        if (mSearchMenu != null) {
+        if (mSearchView != null && mSearchMenu != null) {
+            mSearchMenu.collapseActionView();
             mSearchMenu.setVisible(false);
+            mSearchView.setVisibility(View.GONE);
         }
     }
 }
