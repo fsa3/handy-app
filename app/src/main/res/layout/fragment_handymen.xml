@@ -4,33 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/handymen_swipe"
+    <LinearLayout
+        android:id="@+id/handymen_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="MissingClass">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <ListView
-            android:id="@+id/handymen_listview"
+        <Spinner
+            android:id="@+id/handymen_trade_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/handymen_swipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            tools:ignore="MissingClass">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <ListView
+                android:id="@+id/handymen_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/handymen_progressbar"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/handymen_error"
-        android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:paddingHorizontal="10dp"
         android:textAlignment="center"
         android:textSize="25sp"
         android:visibility="gone" />

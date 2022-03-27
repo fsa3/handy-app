@@ -22,10 +22,13 @@ public class UserService {
         mNetworkManager = NetworkManager.getInstance(context);
     }
 
-    public void findAllHandyUsers(String name, NetworkCallback<List<HandyUser>> callback) {
+    public void findAllHandyUsers(String name, String trade, NetworkCallback<List<HandyUser>> callback) {
         Uri.Builder uri = Uri.parse("/handymen").buildUpon();
         if (name != null) {
             uri.appendQueryParameter("name", name);
+        }
+        if (trade != null) {
+            uri.appendQueryParameter("trade", trade);
         }
         mNetworkManager.sendRequest(uri.build().toString(), Request.Method.GET, new NetworkCallback<String>() {
             @Override
