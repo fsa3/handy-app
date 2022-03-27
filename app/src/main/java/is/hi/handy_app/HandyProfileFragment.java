@@ -34,13 +34,28 @@ public class HandyProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_handyprofile, container,false);
         ((MainActivity)HandyProfileFragment.this.requireActivity()).hideSearch();
-       /* mHandyName = view.findViewById(R.id.handy_name);*/
+       mHandyName = view.findViewById(R.id.handy_name);
        /* mHandyTrade = view.findViewById(R.id.handy_trade);*/
-      /*  mHandyHourlyRate = view.findViewById(R.id.handy_hourly_rate);*/
+       /*mHandyHourlyRate = view.findViewById(R.id.handy_hourly_rate);*/
 
-        /*mHandyName.setText(mHandyUser.getName());*/
-        /*mHandyTrade.setText(mHandyUser.getTrade());*/
-      /*  mHandyHourlyRate.setText((int) mHandyUser.getHourlyRate());*/
+
+       mHandyName.setText(mHandyUser.getName());
+       /*mHandyHourlyRate.setText((int)mHandyUser.getHourlyRate());*/
+
+
+
+
+
+
+        mButtonReview = (Button) view.findViewById(R.id.write_a_review);
+        mButtonReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO Útfæra rating. tengja við rating bar
+            }
+        });
+
+
 
         return view;
     }
