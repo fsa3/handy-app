@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -51,20 +53,36 @@ public class HandymenFragment extends Fragment {
         mErrorText = (TextView) view.findViewById(R.id.handymen_error);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.handymen_swipe);
 
-        getHandymen();
+        getHandymen(null);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getHandymen();
+                getHandymen(null);
+            }
+        });
+
+        ((MainActivity) mContext).setSearch("Search for a Handyman", new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                getHandymen(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.length() == 0) {
+                    getHandymen(null);
+                }
+                return false;
             }
         });
 
         return view;
     }
 
-    private void getHandymen() {
-        mUserService.findAllHandyUsers(new NetworkCallback<List<HandyUser>>() {
+    private void getHandymen(String name) {
+        mUserService.findAllHandyUsers(name, new NetworkCallback<List<HandyUser>>() {
             @Override
             public void onSuccess(List<HandyUser> result) {
                 mHandyUsers = result;

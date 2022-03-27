@@ -1,32 +1,29 @@
 package is.hi.handy_app;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
-import java.util.Objects;
-
-import is.hi.handy_app.Entities.Ad;
-import is.hi.handy_app.Networking.NetworkCallback;
-import is.hi.handy_app.Networking.NetworkManager;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private SearchView mSearchView;
+    private MenuItem mSearchMenu;
+    private Boolean mSearchVisible = true;
+    private String mSearchHint;
+    private SearchView.OnQueryTextListener mSearchListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +71,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        mSearchMenu = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) mSearchMenu.getActionView();
+
+        if (!mSearchVisible) {
+            mSearchMenu.setVisible(false);
+        }
+
+        if (mSearchHint != null && mSearchListener != null) {
+            mSearchView.setQueryHint(mSearchHint);
+            mSearchView.setOnQueryTextListener(mSearchListener);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void setSearch(String hint, SearchView.OnQueryTextListener listener) {
+        mSearchHint = hint;
+        mSearchListener = listener;
+        if (mSearchView != null && mSearchMenu != null) {
+            mSearchView.setQueryHint(mSearchHint);
+            mSearchView.setOnQueryTextListener(mSearchListener);
+            mSearchMenu.setVisible(true);
+        }
+    }
+
+    public void hideSearch() {
+        mSearchVisible = false;
+        if (mSearchMenu != null) {
+            mSearchMenu.setVisible(false);
         }
     }
 }

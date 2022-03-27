@@ -1,6 +1,10 @@
 package is.hi.handy_app.Services;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -20,8 +24,12 @@ public class AdService {
         mNetworkManager = NetworkManager.getInstance(context);
     }
 
-    public void findAll(NetworkCallback<List<Ad>> callback) {
-        mNetworkManager.sendRequest("/ads", Request.Method.GET, new NetworkCallback<String>() {
+    public void findAll(String searchQuery, NetworkCallback<List<Ad>> callback) {
+        Uri.Builder uri = Uri.parse("/ads").buildUpon();
+        if (searchQuery != null) {
+            uri.appendQueryParameter("search", searchQuery);
+        }
+        mNetworkManager.sendRequest(uri.build().toString(), Request.Method.GET, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();

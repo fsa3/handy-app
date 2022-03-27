@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -52,20 +54,36 @@ public class AdvertisementsFragment extends Fragment {
         mErrorText = (TextView) view.findViewById(R.id.ads_error);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.ads_swipe);
 
-        getAds();
+        getAds(null);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getAds();
+                getAds(null);
+            }
+        });
+
+        ((MainActivity) mContext).setSearch("Search by Ad name or description", new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                getAds(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.length() == 0) {
+                    getAds(null);
+                }
+                return false;
             }
         });
 
         return view;
     }
 
-    private void getAds() {
-        mAdService.findAll(new NetworkCallback<List<Ad>>() {
+    private void getAds(String searchQuery) {
+        mAdService.findAll(searchQuery, new NetworkCallback<List<Ad>>() {
             @Override
             public void onSuccess(List<Ad> result) {
                 mAds = result;

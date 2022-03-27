@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Base64;
+import java.util.Objects;
 
 import is.hi.handy_app.Entities.Ad;
 
@@ -39,6 +40,7 @@ public class AdFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ad, container, false);
+        ((MainActivity) AdFragment.this.requireActivity()).hideSearch();
         mAdTitle = view.findViewById(R.id.ad_title);
         mAdImage = view.findViewById(R.id.ad_image);
         mAdTrade = view.findViewById(R.id.ad_trade);

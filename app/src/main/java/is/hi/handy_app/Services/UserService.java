@@ -1,6 +1,7 @@
 package is.hi.handy_app.Services;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -21,8 +22,12 @@ public class UserService {
         mNetworkManager = NetworkManager.getInstance(context);
     }
 
-    public void findAllHandyUsers(NetworkCallback<List<HandyUser>> callback) {
-        mNetworkManager.sendRequest("/handymen", Request.Method.GET, new NetworkCallback<String>() {
+    public void findAllHandyUsers(String name, NetworkCallback<List<HandyUser>> callback) {
+        Uri.Builder uri = Uri.parse("/handymen").buildUpon();
+        if (name != null) {
+            uri.appendQueryParameter("name", name);
+        }
+        mNetworkManager.sendRequest(uri.build().toString(), Request.Method.GET, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
