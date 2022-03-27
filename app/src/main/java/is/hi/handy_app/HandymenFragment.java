@@ -85,6 +85,7 @@ public class HandymenFragment extends Fragment {
         mUserService.findAllHandyUsers(name, new NetworkCallback<List<HandyUser>>() {
             @Override
             public void onSuccess(List<HandyUser> result) {
+                mErrorText.setVisibility(View.GONE);
                 mHandyUsers = result;
                 HandyUserAdapter adapter = new HandyUserAdapter(mContext, mHandyUsers);
                 mListView.setAdapter(adapter);
@@ -103,6 +104,10 @@ public class HandymenFragment extends Fragment {
                                 .commit();
                     }
                 });
+                if (mHandyUsers.size() == 0) {
+                    mErrorText.setText(getResources().getString(R.string.no_results));
+                    mErrorText.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

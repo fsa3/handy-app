@@ -86,6 +86,7 @@ public class AdvertisementsFragment extends Fragment {
         mAdService.findAll(searchQuery, new NetworkCallback<List<Ad>>() {
             @Override
             public void onSuccess(List<Ad> result) {
+                mErrorText.setVisibility(View.GONE);
                 mAds = result;
                 AdsAdapter adapter = new AdsAdapter(AdvertisementsFragment.this.getActivity(), mAds);
                 mGridView.setAdapter(adapter);
@@ -104,6 +105,10 @@ public class AdvertisementsFragment extends Fragment {
                                 .commit();
                     }
                 });
+                if (mAds.size() == 0) {
+                    mErrorText.setText(getResources().getString(R.string.no_results));
+                    mErrorText.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

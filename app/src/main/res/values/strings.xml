@@ -4,4 +4,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="message_advertiser">Message advertiser</string>
     <string name="posted_by">Posted by: %1$s</string>
+    <string name="no_results">No results</string>
 </resources>
