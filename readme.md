@@ -10,7 +10,7 @@
     * Github: [`BearPays`](https://github.com/BearPays)
 * Fannar Steinn Aðalsteinsson - [fsa3@hi.is](mailto:fsa3@hi.is)
     * Github: [`fsa3`](https://github.com/fsa3)
-* Kári Kjærnsted - [kak25@hi.is](mailto:kak25@hi.is)
+* Kári Kjærnested - [kak25@hi.is](mailto:kak25@hi.is)
     * Github: [`kak25`](https://github.com/kak25)
 * Kári Viðar Jónsson - [kvj1@hi.is](mailto:kvj1@hi.is)
     * Github: [`fredburger11`](https://github.com/fredburger11)
