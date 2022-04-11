@@ -1,19 +1,15 @@
 package is.hi.handy_app;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
-import java.util.Objects;
 
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Library.AdsAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
-import is.hi.handy_app.Networking.NetworkManager;
 import is.hi.handy_app.Services.AdService;
 
 public class AdvertisementsFragment extends Fragment {
@@ -96,13 +90,17 @@ public class AdvertisementsFragment extends Fragment {
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Fragment adFragment = new AdFragment(mAds.get(i));
+                        /*
+                        Fragment adFragment = new AdActivity(mAds.get(i));
                         FragmentManager fragmentManager = AdvertisementsFragment.this.getActivity().getSupportFragmentManager();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragment_container, adFragment)
                                 .addToBackStack(null)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
+                         */
+                        Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
+                        startActivity(intent);
                     }
                 });
                 if (mAds.size() == 0) {

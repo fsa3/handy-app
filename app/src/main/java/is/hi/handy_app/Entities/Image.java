@@ -1,6 +1,8 @@
 package is.hi.handy_app.Entities;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable {
     private long id;
 
     private byte[] image;

@@ -1,10 +1,11 @@
 package is.hi.handy_app.Entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class User {
+public class User implements Serializable {
     protected long id;
     protected String name;
     protected String email;

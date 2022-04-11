@@ -1,26 +1,25 @@
 package is.hi.handy_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.os.Parcelable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Base64;
 
 import is.hi.handy_app.Entities.Ad;
 
-public class AdFragment extends Fragment {
+public class AdActivity extends AppCompatActivity {
+    private static final String EXTRA_AD = "is.hi.handy_app.ad";
+
     Ad mAd;
 
     TextView mAdTitle;
@@ -31,24 +30,25 @@ public class AdFragment extends Fragment {
     TextView mAdDescription;
     TextView mAdAdvertiser;
 
-    public AdFragment(Ad ad) {
-        this.mAd = ad;
+    public static Intent newIntent(Context packageContext, Ad ad) {
+        Intent i = new Intent(packageContext, AdActivity.class);
+        i.putExtra(EXTRA_AD, ad);
+        return i;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ad, container, false);
-        ((MainActivity) AdFragment.this.requireActivity()).hideSearch();
-        mAdTitle = view.findViewById(R.id.ad_title);
-        mAdImage = view.findViewById(R.id.ad_image);
-        mAdTrade = view.findViewById(R.id.ad_trade);
-        mAdLocation = view.findViewById(R.id.ad_location);
-        mAdDate = view.findViewById(R.id.ad_date);
-        mAdDescription = view.findViewById(R.id.ad_description);
-        mAdAdvertiser = view.findViewById(R.id.ad_advertiser);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ad);
+
+        mAd = (Ad) getIntent().getSerializableExtra(EXTRA_AD);
+        mAdTitle = findViewById(R.id.ad_title);
+        mAdImage = findViewById(R.id.ad_image);
+        mAdTrade = findViewById(R.id.ad_trade);
+        mAdLocation = findViewById(R.id.ad_location);
+        mAdDate = findViewById(R.id.ad_date);
+        mAdDescription = findViewById(R.id.ad_description);
+        mAdAdvertiser = findViewById(R.id.ad_advertiser);
         mAdTitle.setText(mAd.getTitle());
         byte[] decodedImage = Base64.getDecoder().decode(mAd.getStringImage());
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
@@ -62,6 +62,7 @@ public class AdFragment extends Fragment {
         mAdTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Fragment handymenFragment = new HandymenFragment(mAd.getTrade().toString());
                 FragmentManager fragmentManager = AdFragment.this.getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -69,8 +70,8 @@ public class AdFragment extends Fragment {
                         .addToBackStack(null)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
+                 */
             }
         });
-        return view;
     }
 }
