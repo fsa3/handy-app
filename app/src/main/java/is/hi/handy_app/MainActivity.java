@@ -12,11 +12,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import is.hi.handy_app.Services.UserService;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawer;
+    public static final String SHARED_PREFS = "handy-shared-prefs";
+
+    private UserService mUserService;
+
+    private TextView mNavTitle;
+    private TextView mNavSubtitle;
+
+    private DrawerLayout mDrawer;
+
     private SearchView mSearchView;
     private MenuItem mSearchMenu;
     private Boolean mSearchVisible = true;
@@ -28,15 +39,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mUserService = new UserService(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        View navHeader = navigationView.getHeaderView(0);
+        mNavTitle = navHeader.findViewById(R.id.nav_header_title);
+        mNavSubtitle = navHeader.findViewById(R.id.nav_header_subtitle);
+        if (mUserService.isUserLoggedIn()) {
+            mNavTitle.setText(mUserService.getLoggedInUserName());
+            mNavSubtitle.setText(mUserService.getLoggedInUserEmail());
+        }
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HandymenFragment()).commit();
@@ -57,15 +78,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         }
         else {
             super.onBackPressed();

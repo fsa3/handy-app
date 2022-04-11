@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class User {
-    protected long ID;
+    protected long id;
     protected String name;
     protected String email;
     protected String info;
@@ -17,7 +17,7 @@ public class User {
     }
 
     public User(long id, String name) {
-        this.ID = id;
+        this.id = id;
         this.name = name;
     }
 
@@ -54,7 +54,7 @@ public class User {
     }
 
     public long getID() {
-        return ID;
+        return id;
     }
 
     public String getInfo() {
@@ -65,7 +65,7 @@ public class User {
         this.info = info;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setID(long id) {
+        this.id = id;
     }
 }

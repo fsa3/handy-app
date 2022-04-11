@@ -3,6 +3,7 @@ package is.hi.handy_app.Services;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.util.Log;
@@ -19,14 +20,25 @@ import java.util.Map;
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 
 public class UserService {
+    public static final String USER_ID = "logged-in-user-id";
+    public static final String USER_NAME = "logged-in-user-name";
+    public static final String USER_EMAIL = "logged-in-user-email";
+    public static final String HANDYUSER_LOGGEDIN = "handy-user-logged-in";
+
     private NetworkManager mNetworkManager;
+    private Context mContext;
+    private SharedPreferences mSharedPreferences;
+
 
     public UserService(Context context) {
+        mContext = context;
         mNetworkManager = NetworkManager.getInstance(context);
+        mSharedPreferences = mContext.getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
     }
 
     public void findAllHandyUsers(String name, String trade, NetworkCallback<List<HandyUser>> callback) {
@@ -63,7 +75,11 @@ public class UserService {
             public void onSuccess(String result) {
                 Gson gson = new Gson();
                 Type userType = new TypeToken<User>(){}.getType();
+                Type handyUserType = new TypeToken<HandyUser>(){}.getType();
                 User loggedInUser = gson.fromJson(result, userType);
+                Log.d("eh logged in", loggedInUser.getID() + "");
+                HandyUser handyUser = gson.fromJson(result, handyUserType);
+                saveLoggedInUser(loggedInUser, handyUser.getTrade() != null);
                 callback.onSuccess(loggedInUser);
             }
 
@@ -72,5 +88,28 @@ public class UserService {
                 callback.onaFailure("Login not successful: " + errorString);
             }
         });
+    }
+
+    public void saveLoggedInUser(User user, boolean isHandyUser) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putLong(USER_ID, user.getID());
+        Log.d("eh logged in", "user saved: " + user.getID());
+        editor.putBoolean(HANDYUSER_LOGGEDIN, isHandyUser);
+        editor.putString(USER_NAME, user.getName());
+        editor.putString(USER_EMAIL, user.getEmail());
+        editor.apply();
+    }
+
+    public boolean isUserLoggedIn() {
+        long userId = mSharedPreferences.getLong(USER_ID, 0);
+        return userId != 0;
+    }
+
+    public String getLoggedInUserName() {
+        return mSharedPreferences.getString(USER_NAME, "");
+    }
+
+    public String getLoggedInUserEmail() {
+        return mSharedPreferences.getString(USER_EMAIL, "");
     }
 }
