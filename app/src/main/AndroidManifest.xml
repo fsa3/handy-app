@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Handyapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RegisterUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="Handy"
