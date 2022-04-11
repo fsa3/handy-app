@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private TextView mNavTitle;
     private TextView mNavSubtitle;
+    private MenuItem mSignIn;
+    private MenuItem mMyProfile;
+    private MenuItem mMyMessages;
+    private MenuItem mSignOut;
 
     private DrawerLayout mDrawer;
 
@@ -51,10 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View navHeader = navigationView.getHeaderView(0);
         mNavTitle = navHeader.findViewById(R.id.nav_header_title);
         mNavSubtitle = navHeader.findViewById(R.id.nav_header_subtitle);
-        if (mUserService.isUserLoggedIn()) {
-            mNavTitle.setText(mUserService.getLoggedInUserName());
-            mNavSubtitle.setText(mUserService.getLoggedInUserEmail());
-        }
+
+        Menu navMenu = navigationView.getMenu();
+        mSignIn = navMenu.findItem(R.id.nav_login);
+        mMyProfile = navMenu.findItem(R.id.nav_my_profile);
+        mMyMessages = navMenu.findItem(R.id.nav_my_messages);
+        mSignOut = navMenu.findItem(R.id.nav_logout);
+        resetMenu();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
@@ -75,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_login:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                mUserService.logout();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HandymenFragment()).commit();
+                this.resetMenu();
                 break;
         }
 
@@ -131,6 +143,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mSearchMenu.collapseActionView();
             mSearchMenu.setVisible(false);
             mSearchView.setVisibility(View.GONE);
+        }
+    }
+
+    public void resetMenu() {
+        if (mUserService.isUserLoggedIn()) {
+            mNavTitle.setText(mUserService.getLoggedInUserName());
+            mNavSubtitle.setText(mUserService.getLoggedInUserEmail());
+
+            mSignIn.setVisible(false);
+            mMyProfile.setVisible(true);
+            mMyMessages.setVisible(true);
+            mSignOut.setVisible(true);
+        } else {
+            mNavTitle.setText(getResources().getString(R.string.header_title));
+            mNavSubtitle.setText(getResources().getString(R.string.header_subtitle));
+
+            mSignIn.setVisible(true);
+            mMyProfile.setVisible(false);
+            mMyMessages.setVisible(false);
+            mSignOut.setVisible(false);
         }
     }
 }

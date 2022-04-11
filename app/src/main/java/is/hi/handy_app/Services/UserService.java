@@ -90,6 +90,15 @@ public class UserService {
         });
     }
 
+    public void logout() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.remove(USER_ID);
+        editor.remove(HANDYUSER_LOGGEDIN);
+        editor.remove(USER_NAME);
+        editor.remove(USER_EMAIL);
+        editor.apply();
+    }
+
     public void saveLoggedInUser(User user, boolean isHandyUser) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putLong(USER_ID, user.getID());

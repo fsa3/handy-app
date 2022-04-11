@@ -14,4 +14,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="register">Register</string>
+    <string name="header_title">It\'s free to join Handy!</string>
+    <string name="header_subtitle">Sign in to contact a Handyman</string>
 </resources>
