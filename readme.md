@@ -1,4 +1,4 @@
-# Handy
+## Handy
 *Team 2 - product*
 
 ![](app/src/main/res/mipmap-xhdpi/handyicon.png)
