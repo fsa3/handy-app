@@ -12,12 +12,18 @@
             android:icon="@drawable/ic_ad_24"
             android:title="Advertisements" />
     </group>
-    <item android:title="Communicate">
+    <item android:title="User Actions">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_ad_24"
-                android:title="Login" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_baseline_login_24"
+                    android:title="Sign In" />
+                <item
+                    android:id="@+id/nav_my_profile"
+                    android:icon="@drawable/ic_baseline_assignment_ind_24"
+                    android:title="My Profile" />
+            </group>
         </menu>
     </item>
 </menu>
