@@ -6,12 +6,15 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/handyicon"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Handyapp"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".RegisterHandyUserActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterUserActivity"
             android:exported="false" />

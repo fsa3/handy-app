@@ -1,6 +1,7 @@
 package is.hi.handy_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import org.w3c.dom.Text;
 
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Networking.NetworkCallback;
@@ -29,6 +32,8 @@ public class LoginFragment extends Fragment {
     private ProgressBar mProgressBar;
     private TextView mLoginMessage;
 
+    private TextView mCreateAccLink;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,6 +44,8 @@ public class LoginFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ((MainActivity) LoginFragment.this.requireActivity()).hideSearch();
+
+        mCreateAccLink = (TextView) view.findViewById(R.id.noAccLink);
 
         mEmailText = view.findViewById(R.id.email);
         mPasswordText = view.findViewById(R.id.password);
@@ -68,6 +75,14 @@ public class LoginFragment extends Fragment {
                 });
             }
         });
+
+        mCreateAccLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(mContext, RegisterUserActivity.class));
+                }
+        });
+
 
         return view;
     }

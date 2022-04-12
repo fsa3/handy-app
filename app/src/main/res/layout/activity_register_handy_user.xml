@@ -58,7 +58,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullName"
-    />
+        />
 
     <EditText
         android:id="@+id/password"
@@ -74,20 +74,33 @@
         android:layout_marginTop="20dp"
         />
 
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="378dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:prompt="@string/trades"
+        android:tooltipText="@string/trades"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password" />
+
     <Button
         android:id="@+id/registerUser"
         android:layout_width="380dp"
         android:layout_height="70dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#0ED6B9"
         android:text="Register User"
         android:textColor="#ffffff"
         android:textSize="26sp"
         android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -105,17 +118,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <TextView
-        android:id="@+id/noHandyAccLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reg_a_handy_account"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-black"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUser"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
