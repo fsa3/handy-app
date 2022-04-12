@@ -18,5 +18,6 @@
     <string name="trades">Trade</string>
     <string name="header_title">It\'s free to join Handy!</string>
     <string name="header_subtitle">Sign in to contact a Handyman</string>
+    <string name="create_a_new_advertisement">Create a new Advertisement</string>
 
 </resources>

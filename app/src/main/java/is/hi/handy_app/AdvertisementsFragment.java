@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class AdvertisementsFragment extends Fragment {
     private ProgressBar mProgressBar;
     private TextView mErrorText;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private FloatingActionButton mCreateAdButton;
 
     @Nullable
     @Override
@@ -47,6 +51,7 @@ public class AdvertisementsFragment extends Fragment {
         mGridView = (GridView) view.findViewById(R.id.ads_gridview);
         mErrorText = (TextView) view.findViewById(R.id.ads_error);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.ads_swipe);
+        mCreateAdButton = view.findViewById(R.id.ads_create_new);
 
         getAds(null);
 
@@ -54,6 +59,13 @@ public class AdvertisementsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 getAds(null);
+            }
+        });
+
+        mCreateAdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(mContext, CreateAdActivity.class));
             }
         });
 
