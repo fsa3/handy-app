@@ -63,6 +63,7 @@ public class LoginFragment extends Fragment {
                     public void onSuccess(User result) {
                         Toast.makeText(mContext, "Logged in as " + result.getName(), Toast.LENGTH_SHORT).show();
                         mProgressBar.setVisibility(View.GONE);
+                        ((MainActivity) mContext).resetMenu();
                     }
 
                     @Override

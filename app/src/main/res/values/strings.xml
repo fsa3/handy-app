@@ -16,4 +16,7 @@
     <string name="register">Register</string>
     <string name="reg_a_handy_account">Create a handyman account</string>
     <string name="trades">Trade</string>
+    <string name="header_title">It\'s free to join Handy!</string>
+    <string name="header_subtitle">Sign in to contact a Handyman</string>
+
 </resources>

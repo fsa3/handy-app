@@ -23,6 +23,14 @@
                     android:id="@+id/nav_my_profile"
                     android:icon="@drawable/ic_baseline_assignment_ind_24"
                     android:title="My Profile" />
+                <item
+                    android:id="@+id/nav_my_messages"
+                    android:icon="@drawable/ic_baseline_message_24"
+                    android:title="My Messages" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_baseline_exit_to_app_24"
+                    android:title="Sign Out" />
             </group>
         </menu>
     </item>
