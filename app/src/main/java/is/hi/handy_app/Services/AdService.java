@@ -84,4 +84,18 @@ public class AdService {
             }
         });
     }
+
+    public void deleteAd(Ad ad, NetworkCallback<Ad> callback) {
+        mNetworkManager.sendRequest("/ads/" + ad.getID(), Request.Method.DELETE, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                callback.onSuccess(null);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Error deleting Ad: " + errorString);
+            }
+        });
+    }
 }

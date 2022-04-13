@@ -34,6 +34,7 @@ import is.hi.handy_app.Services.AdService;
 
 public class AdvertisementsFragment extends Fragment {
     public static int NEW_AD_REQUEST_CODE = 201;
+    public static int OPEN_AD_REQUEST_CODE = 202;
 
     private Context mContext;
     private AdService mAdService;
@@ -104,6 +105,11 @@ public class AdvertisementsFragment extends Fragment {
                 snackbar.show();
             }
         }
+        else if (requestCode == OPEN_AD_REQUEST_CODE && resultCode == RESULT_OK) {
+            getAds(null);
+            Snackbar snackbar = Snackbar.make(mGridView, "Ad successfully deleted", Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
     }
 
     private void getAds(String searchQuery) {
@@ -130,7 +136,7 @@ public class AdvertisementsFragment extends Fragment {
                                 .commit();
                          */
                         Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
-                        startActivity(intent);
+                        startActivityForResult(intent, OPEN_AD_REQUEST_CODE);
                     }
                 });
                 if (mAds.size() == 0) {

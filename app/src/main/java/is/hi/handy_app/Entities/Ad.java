@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class Ad implements Comparable<Ad>, Serializable {
-    @SerializedName("ID")
+    @SerializedName("id")
     private long mID;
     @SerializedName("title")
     private String mTitle;
