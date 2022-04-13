@@ -132,4 +132,8 @@ public class UserService {
     public String getLoggedInUserEmail() {
         return mSharedPreferences.getString(USER_EMAIL, "");
     }
+
+    public boolean getIsHandyUserLoggedIn() {
+        return mSharedPreferences.getBoolean(HANDYUSER_LOGGEDIN, false);
+    }
 }

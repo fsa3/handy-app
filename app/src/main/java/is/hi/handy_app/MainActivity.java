@@ -88,6 +88,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HandymenFragment()).commit();
                 this.resetMenu();
                 break;
+            case R.id.nav_my_profile:
+                if (mUserService.getIsHandyUserLoggedIn()) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyHandyProfileFragment()).commit();
+                }
+                else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyProfileFragment()).commit();
+                }
+                break;
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
