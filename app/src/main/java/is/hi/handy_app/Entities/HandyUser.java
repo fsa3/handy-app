@@ -16,6 +16,15 @@ public class HandyUser extends User {
     public HandyUser() {
     }
 
+    public HandyUser(long id, String name, String email, Trade trade, double hourlyRate, double averageRating, List<PortfolioItem> portfolioItem, List<Review> reviewsAbout) {
+        super(id, name, email);
+        this.trade = trade;
+        this.hourlyRate = hourlyRate;
+        this.averageRating = averageRating;
+        this.portfolioItem = portfolioItem;
+        this.reviewsAbout = reviewsAbout;
+    }
+
     public Trade getTrade() {
         return trade;
     }

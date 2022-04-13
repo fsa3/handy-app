@@ -35,12 +35,12 @@ public class HandyProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_handyprofile, container,false);
         ((MainActivity)HandyProfileFragment.this.requireActivity()).hideSearch();
        mHandyName = view.findViewById(R.id.handy_name);
-       /* mHandyTrade = view.findViewById(R.id.handy_trade);*/
-       /*mHandyHourlyRate = view.findViewById(R.id.handy_hourly_rate);*/
+       /*mHandyTrade = view.findViewById(R.id.handy_trade);*/
+       mHandyHourlyRate = view.findViewById(R.id.handy_hourly_rate);
 
 
        mHandyName.setText(mHandyUser.getName());
-       /*mHandyHourlyRate.setText((int)mHandyUser.getHourlyRate());*/
+       mHandyHourlyRate.setText((int)mHandyUser.getHourlyRate());
 
 
 
