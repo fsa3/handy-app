@@ -72,8 +72,8 @@ public class NetworkManager {
         sQueue.add(request);
     }
 
-    public void sendRequestWithBody(String url, int method, Map<String, String> body, NetworkCallback<String> callback) {
-        JsonObjectRequest request = new JsonObjectRequest(method, BASE_URL + url, new JSONObject(body),
+    public void sendRequestWithBody(String url, int method, JSONObject body, NetworkCallback<String> callback) {
+        JsonObjectRequest request = new JsonObjectRequest(method, BASE_URL + url, body,
                 new Response.Listener<JSONObject>() {
 
                     @Override

@@ -12,6 +12,9 @@ import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -66,9 +69,13 @@ public class UserService {
     }
 
     public void login(String email, String password, NetworkCallback<User> callback) {
-        Map<String, String> body = new HashMap<String, String>();
-        body.put("email", email);
-        body.put("password", password);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email", email);
+            body.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, body.toString());
         mNetworkManager.sendRequestWithBody("/login", Request.Method.POST, body, new NetworkCallback<String>() {
             @Override
@@ -112,6 +119,10 @@ public class UserService {
     public boolean isUserLoggedIn() {
         long userId = mSharedPreferences.getLong(USER_ID, 0);
         return userId != 0;
+    }
+
+    public Long getLoggedInUserId() {
+        return mSharedPreferences.getLong(USER_ID, 0);
     }
 
     public String getLoggedInUserName() {

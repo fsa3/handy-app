@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/createAd_container"
     tools:context=".CreateAdActivity">
 
     <TextView
@@ -93,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Upload id prof pic" />
+            android:text="Add an image to your ad" />
 
         <ImageView
             android:id="@+id/createAd_image"
@@ -108,7 +109,7 @@
         android:id="@+id/createAd_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="650dp"
+        android:layout_marginTop="600dp"
         android:text="Post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.425"

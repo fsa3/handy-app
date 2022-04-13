@@ -1,5 +1,7 @@
 package is.hi.handy_app;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -30,6 +33,8 @@ import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
 
 public class AdvertisementsFragment extends Fragment {
+    public static int NEW_AD_REQUEST_CODE = 201;
+
     private Context mContext;
     private AdService mAdService;
     private List<Ad> mAds;
@@ -65,7 +70,7 @@ public class AdvertisementsFragment extends Fragment {
         mCreateAdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, CreateAdActivity.class));
+                startActivityForResult(new Intent(mContext, CreateAdActivity.class), NEW_AD_REQUEST_CODE);
             }
         });
 
@@ -86,6 +91,19 @@ public class AdvertisementsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_AD_REQUEST_CODE && resultCode == RESULT_OK) {
+            assert data != null;
+            if (data.getBooleanExtra(CreateAdActivity.AD_SUCCESSFULLY_POSTED_EXTRA, false)) {
+                getAds(null);
+                Snackbar snackbar = Snackbar.make(mGridView, "Ad successfully posted!", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
     }
 
     private void getAds(String searchQuery) {

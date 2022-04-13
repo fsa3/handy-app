@@ -11,19 +11,46 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import is.hi.handy_app.Entities.Ad;
+import is.hi.handy_app.Entities.Trade;
+import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.Services.AdService;
 
 public class CreateAdActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     public static final int CAMERA_PERMISSION_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
 
+    public static String AD_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.ad_successfully_posted";
+
+    AdService mAdService;
+
+    TextView mTitleTextView;
+    Spinner mTradeSpinner;
+    TextView mLocationTextView;
+    TextView mDescriptionTextView;
     ImageView mImageView;
     Button mPostButton;
 
@@ -34,13 +61,64 @@ public class CreateAdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ad_activity);
 
+        mAdService = new AdService(this);
+
+        mTitleTextView = findViewById(R.id.createAd_title);
+        mTradeSpinner = findViewById(R.id.createAd_trade_spinner);
+        mLocationTextView = findViewById(R.id.createAd_location);
+        mDescriptionTextView = findViewById(R.id.createAd_description);
         mImageView = findViewById(R.id.createAd_image);
         mPostButton = findViewById(R.id.createAd_post);
+
+        List<String> trades = Stream.of(Trade.values())
+                .map(Trade::name)
+                .collect(Collectors.toList());
+        mTradeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, trades));
 
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectImage();
+            }
+        });
+
+        mPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postAd();
+            }
+        });
+    }
+
+    private void postAd() {
+
+        byte[] imageInBytes = {};
+        if (mImageView.getDrawable() != null) {
+            Bitmap bitmap =((BitmapDrawable) mImageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            imageInBytes = baos.toByteArray();
+        }
+
+        Ad ad = new Ad();
+        ad.setTitle(mTitleTextView.getText().toString());
+        ad.setTrade(Trade.valueOf(mTradeSpinner.getSelectedItem().toString()));
+        ad.setLocation(mLocationTextView.getText().toString());
+        ad.setDescription(mDescriptionTextView.getText().toString());
+
+        mAdService.saveAd(ad, imageInBytes, new NetworkCallback<Ad>() {
+            @Override
+            public void onSuccess(Ad result) {
+                Intent data = new Intent();
+                data.putExtra(AD_SUCCESSFULLY_POSTED_EXTRA, true);
+                setResult(RESULT_OK, data);
+                finish();
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.createAd_container),"Posting failed, error: " + errorString,Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         });
     }
