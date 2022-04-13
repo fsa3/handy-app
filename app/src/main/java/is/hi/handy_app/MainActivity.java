@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyProfileFragment()).commit();
                 }
                 break;
+            case R.id.nav_my_messages:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyMessagesFragment()).commit();
+                break;
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
