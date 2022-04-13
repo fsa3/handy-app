@@ -98,7 +98,9 @@ public class MyMessagesFragment extends Fragment {
 
             @Override
             public void onaFailure(String errorString) {
-
+                mErrorText.setText(errorString);
+                mProgressBar.setVisibility(View.GONE);
+                mErrorText.setVisibility(View.VISIBLE);
             }
         });
     }
