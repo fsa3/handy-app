@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/My_Profile_handy"
+        android:id="@+id/My_Profile_handy1"
         android:layout_width="417dp"
         android:layout_height="64dp"
         android:background="@color/purple_700"
@@ -84,7 +84,7 @@
         tools:text="Email" />
 
     <TextView
-        android:id="@+id/textview9"
+        android:id="@+id/about_me_handy"
         android:layout_width="106dp"
         android:layout_height="34dp"
         android:layout_marginStart="24dp"
