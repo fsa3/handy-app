@@ -97,6 +97,40 @@ public class UserService {
         });
     }
 
+    public void getUser(long id, NetworkCallback<User> callback) {
+        mNetworkManager.sendRequest("/user/" + id, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type userType = new TypeToken<User>(){}.getType();
+                User user = gson.fromJson(result, userType);
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Unable to get user: " + errorString);
+            }
+        });
+    }
+
+    public void getHandyUser(long id, NetworkCallback<HandyUser> callback) {
+        mNetworkManager.sendRequest("/handyUser/" + id, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type userType = new TypeToken<HandyUser>(){}.getType();
+                HandyUser user = gson.fromJson(result, userType);
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Unable to get user: " + errorString);
+            }
+        });
+    }
+
     public void logout() {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.remove(USER_ID);
