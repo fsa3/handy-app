@@ -27,17 +27,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="365dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="202dp"
         android:background="@drawable/rounded_corners"
         android:text="@string/message_user"
         android:textColor="#FFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/write_a_review"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/handy_hourly_rate" />
 
@@ -46,21 +45,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="30dp"
 
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="365dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="175dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="202dp"
         android:background="@drawable/rounded_corners"
         android:text="@string/write_review"
         android:textColor="#FFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/send_message"
-        app:layout_constraintTop_toBottomOf="@+id/handy_hourly_rate"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/submit_button" />
 
     <TextView
         android:id="@+id/handy_trade"
@@ -85,14 +82,14 @@
         android:id="@+id/handy_hourly_rate"
         android:layout_width="176dp"
         android:layout_height="31dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="118dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="202dp"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar"
+        app:layout_constraintTop_toBottomOf="@+id/my_rating"
         tools:text="Hourly rate:" />
 
     <TextView
@@ -105,13 +102,13 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="sans-serif-black"
         android:rotation="-25"
+        android:text="@string/rate_me"
         android:textSize="24sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/handy_rating_bar"
         app:layout_constraintEnd_toStartOf="@+id/handy_rating_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_name"
-        tools:text="My rating" />
+        app:layout_constraintTop_toBottomOf="@+id/handy_name" />
 
     <RatingBar
         android:id="@+id/handy_rating_bar"
@@ -119,21 +116,38 @@
         android:layout_height="61dp"
         android:layout_marginStart="103dp"
         android:layout_marginEnd="67dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/handy_hourly_rate"
+        android:numStars="5"
+        android:stepSize=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/handy_rating"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <Button
+        android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="153dp"
+        android:text="@string/submit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar" />
+
+    <TextView
+        android:id="@+id/my_rating"
+        android:layout_width="114dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="77dp"
+        android:layout_marginEnd="264dp"
+        tools:text="my rating"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

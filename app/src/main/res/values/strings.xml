@@ -21,5 +21,7 @@
     <string name="create_a_new_advertisement">Create a new Advertisement</string>
     <string name="message_user">Message User</string>
     <string name="write_review">Write a review</string>
+    <string name="rate_me">Rate me!</string>
+    <string name="submit_button">Submit Rating</string>
 
 </resources>
