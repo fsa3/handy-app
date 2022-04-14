@@ -23,6 +23,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
+
     public String getName() {
         return name;
     }
