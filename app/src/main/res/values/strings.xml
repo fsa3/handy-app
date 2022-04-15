@@ -24,5 +24,6 @@
     <string name="rate_me">Rate me!</string>
     <string name="submit_button">Submit Rating</string>
     <string name="delete_ad">Delete Advertisement</string>
+    <string name="review_banner">reviews !</string>
 
 </resources>
