@@ -10,5 +10,7 @@ public enum Trade {
     Mason,
     Tinsmith,
     Mechanic,
-    Blacksmith
+    Blacksmith;
+
+
 }

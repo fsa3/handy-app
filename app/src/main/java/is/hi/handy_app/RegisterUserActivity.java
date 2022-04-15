@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Services.UserService;
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener{
@@ -41,8 +42,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         mPasswordText = (EditText) findViewById(R.id.password);
 
         mProgressBar = (ProgressBar) findViewById(R.id.loading);
-
-
 
     }
 
@@ -93,8 +92,13 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         }
 
         mProgressBar.setVisibility(View.VISIBLE);
-        //mUserService.// TODO:
 
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        // saveUser...
 
     }
 }
