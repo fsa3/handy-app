@@ -155,6 +155,61 @@ public class UserService {
         return userId != 0;
     }
 
+    public void saveUser(User user, NetworkCallback<User> callback) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("name", user.getName());
+            body.put("email", user.getEmail());
+            body.put("password", user.getPassword());
+            body.put("info", user.getInfo());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mNetworkManager.sendRequestWithBody("/createuser", Request.Method.POST, body, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type userType = new TypeToken<User>(){}.getType();
+                User savedUser = gson.fromJson(result, userType);
+                callback.onSuccess(savedUser);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("User not saved: " + errorString);
+            }
+        });
+
+    }
+
+    public void saveHandyUser(HandyUser handyUser, NetworkCallback<HandyUser> callback) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("name", handyUser.getName());
+            body.put("email", handyUser.getEmail());
+            body.put("password", handyUser.getPassword());
+            body.put("info", handyUser.getInfo());
+            body.put("trade", handyUser.getTrade());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mNetworkManager.sendRequestWithBody("/createhandyuser", Request.Method.POST, body, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type handyUserType = new TypeToken<HandyUser>(){}.getType();
+                HandyUser savedHandyUser = gson.fromJson(result, handyUserType);
+                callback.onSuccess(savedHandyUser);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("HandyUser not saved: " + errorString);
+            }
+        });
+    }
+
     public Long getLoggedInUserId() {
         return mSharedPreferences.getLong(USER_ID, 0);
     }

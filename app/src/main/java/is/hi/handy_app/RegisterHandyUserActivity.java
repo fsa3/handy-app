@@ -13,11 +13,16 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Trade;
+import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.UserService;
 
 public class RegisterHandyUserActivity extends AppCompatActivity implements View.OnClickListener{
+
+    public static String HANDY_USER_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.handy_user_successfully_posted";
 
     private UserService mUserService;
 
@@ -61,11 +66,11 @@ public class RegisterHandyUserActivity extends AppCompatActivity implements View
         }
     }
 
-        private void registerHandyUser() {
+    private void registerHandyUser() {
             String name = mNameText.getText().toString().trim();
             String email = mEmailText.getText().toString().trim();
             String password = mPasswordText.getText().toString().trim();
-            //Trade trade = mSpinner; //TODO:
+            Trade trade = (Trade) mSpinner.getSelectedItem();
 
             if(name.isEmpty()){
                 mNameText.setError("Name is required");
@@ -103,10 +108,25 @@ public class RegisterHandyUserActivity extends AppCompatActivity implements View
             handyUser.setName(name);
             handyUser.setEmail(email);
             handyUser.setPassword(password);
-            //handyUser.setTrade(trade);
+            handyUser.setTrade(trade);
+
+            mUserService.saveHandyUser(handyUser, new NetworkCallback<HandyUser>() {
+                @Override
+                public void onSuccess(HandyUser result) {
+                    Intent data = new Intent();
+                    data.putExtra(HANDY_USER_SUCCESSFULLY_POSTED_EXTRA, true);
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+
+                @Override
+                public void onaFailure(String errorString) {
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.registerhandyUser_container), "Registration failed, error: " + errorString,Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            });
 
 
-            // saveHandyUser...
         }
-    }
+
 }

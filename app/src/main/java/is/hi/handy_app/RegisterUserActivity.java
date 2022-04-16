@@ -11,10 +11,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.UserService;
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener{
+
+    public static String USER_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.user_successfully_posted";
 
     private UserService mUserService;
 
@@ -98,7 +103,21 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         user.setEmail(email);
         user.setPassword(password);
 
-        // saveUser...
+        mUserService.saveUser(user, new NetworkCallback<User>() {
+            @Override
+            public void onSuccess(User result) {
+                Intent data = new Intent();
+                data.putExtra(USER_SUCCESSFULLY_POSTED_EXTRA, true);
+                setResult(RESULT_OK, data);
+                finish();
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.registerUser_container), "Registration failed, error: " + errorString,Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        });
 
     }
 }
