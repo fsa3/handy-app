@@ -29,7 +29,7 @@ public class ReviewService {
     }
 
     public void getMyReviews(long userId, NetworkCallback <List<Review>> callback){
-        mNetworkManager.sendRequest("/myreviews/" + mHandyUser.getID(), Request.Method.GET, new NetworkCallback<String>() {
+        mNetworkManager.sendRequest("/reviews/" + mHandyUser.getID(), Request.Method.GET, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
@@ -76,7 +76,7 @@ public class ReviewService {
     }
 
     public void deleteReview(Review review, NetworkCallback<Review> callback){
-        mNetworkManager.sendRequest("/myreviews/" + review.getID(), Request.Method.DELETE, new NetworkCallback<String>() {
+        mNetworkManager.sendRequest("/reviews/" + review.getID(), Request.Method.DELETE, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 callback.onSuccess(null);
