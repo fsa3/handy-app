@@ -22,6 +22,7 @@ import java.util.Map;
 
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
@@ -31,6 +32,7 @@ public class UserService {
     public static final String USER_ID = "logged-in-user-id";
     public static final String USER_NAME = "logged-in-user-name";
     public static final String USER_EMAIL = "logged-in-user-email";
+    public static final String USER_TRADE = "logged-in-user-trade";
     public static final String HANDYUSER_LOGGEDIN = "handy-user-logged-in";
 
     private NetworkManager mNetworkManager;
@@ -86,7 +88,7 @@ public class UserService {
                 User loggedInUser = gson.fromJson(result, userType);
                 Log.d("eh logged in", loggedInUser.getID() + "");
                 HandyUser handyUser = gson.fromJson(result, handyUserType);
-                saveLoggedInUser(loggedInUser, handyUser.getTrade() != null);
+                saveLoggedInUser(loggedInUser, handyUser.getTrade() != null, handyUser.getTrade());
                 callback.onSuccess(loggedInUser);
             }
 
@@ -140,13 +142,16 @@ public class UserService {
         editor.apply();
     }
 
-    public void saveLoggedInUser(User user, boolean isHandyUser) {
+    public void saveLoggedInUser(User user, boolean isHandyUser, Trade trade) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putLong(USER_ID, user.getID());
         Log.d("eh logged in", "user saved: " + user.getID());
         editor.putBoolean(HANDYUSER_LOGGEDIN, isHandyUser);
         editor.putString(USER_NAME, user.getName());
         editor.putString(USER_EMAIL, user.getEmail());
+        if (isHandyUser) {
+            editor.putString(USER_TRADE, trade.toString());
+        }
         editor.apply();
     }
 
@@ -220,6 +225,10 @@ public class UserService {
 
     public String getLoggedInUserEmail() {
         return mSharedPreferences.getString(USER_EMAIL, "");
+    }
+
+    public String getLoggedInUserTrade() {
+        return mSharedPreferences.getString(USER_TRADE, "empty");
     }
 
     public boolean getIsHandyUserLoggedIn() {

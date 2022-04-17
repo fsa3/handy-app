@@ -56,6 +56,23 @@ public class AdService {
         });
     }
 
+    public void findByUser(long userId, NetworkCallback<List<Ad>> callback) {
+        mNetworkManager.sendRequest("/ads/user/" + userId, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Ad>>(){}.getType();
+                List<Ad> ads = gson.fromJson(result, listType);
+                callback.onSuccess(ads);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Failed to get user advertisements: " + errorString);
+            }
+        });
+    }
+
     public void saveAd(Ad ad, byte[] image, NetworkCallback<Ad> callback) {
         JSONObject body = new JSONObject();
         try {
