@@ -1,10 +1,11 @@
 package is.hi.handy_app;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,12 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
-
-import java.lang.reflect.Type;
 
 import is.hi.handy_app.Entities.HandyUser;
 
@@ -34,6 +31,7 @@ public class HandyProfileFragment extends Fragment {
      TextView mHandyTrade;
      TextView mHandyHourlyRate;
      TextView mAverageRating;
+     Context mContext;
 
 
     public HandyProfileFragment(HandyUser handyUser) {
@@ -43,6 +41,8 @@ public class HandyProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+       mContext = HandyProfileFragment.this.getActivity();
+
         View view = inflater.inflate(R.layout.fragment_handyprofile, container,false);
         ((MainActivity)HandyProfileFragment.this.requireActivity()).hideSearch();
 
@@ -91,47 +91,12 @@ public class HandyProfileFragment extends Fragment {
         mButtonReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Gson gson = new Gson();
-                String json = gson.toJson(mHandyUser);
-
-                Fragment reviewFragment = new ReviewFragment(json);
-                FragmentManager fragmentManager = HandyProfileFragment.this.getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().
-                        replace(R.id.fragment_container,reviewFragment)
-                        .addToBackStack(null)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                Intent intent = ReviewActivity.newIntent(mContext, mHandyUser);
+                startActivityForResult(intent,101);
             }
         });
 
-
-
-     /*   mButtonReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment reviewFragment = new ReviewFragment(mHandyUser);
-                FragmentManager fragmentManager = HandyProfileFragment.this.getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().
-                        replace(R.id.fragment_container,reviewFragment)
-                        .addToBackStack(null)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
-            }
-        });*/
-
         mButtonMessage = (Button) view.findViewById(R.id.send_message);
-
-
-       /* mButtonMessage.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View view) {
-                Fragment reviewFragment = new ReviewFragment(mHandyUser);
-                FragmentManager fragmentManager = HandyProfileFragment.this.getSupportFragmentManager();
-
-            }
-        });*/
-
-
 
         return view;
     }

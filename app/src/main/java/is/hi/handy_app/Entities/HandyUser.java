@@ -1,9 +1,10 @@
 package is.hi.handy_app.Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandyUser extends User {
+public class HandyUser extends User implements Serializable {
     private Trade trade;
     private double hourlyRate;
     private double averageRating;
@@ -24,6 +25,7 @@ public class HandyUser extends User {
         this.portfolioItem = portfolioItem;
         this.reviewsAbout = reviewsAbout;
     }
+    public long getID(){return id;}
 
     public Trade getTrade() {
         return trade;

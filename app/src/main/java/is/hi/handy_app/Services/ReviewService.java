@@ -29,7 +29,7 @@ public class ReviewService {
     }
 
     public void getMyReviews(long userId, NetworkCallback <List<Review>> callback){
-        mNetworkManager.sendRequest("/reviews/" + mHandyUser.getID(), Request.Method.GET, new NetworkCallback<String>() {
+        mNetworkManager.sendRequest("/reviews/" + userId, Request.Method.GET, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
