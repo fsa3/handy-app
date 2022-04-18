@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,11 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 
 import is.hi.handy_app.Services.UserService;
+
+import com.google.firebase.messaging.RemoteMessage;
+import com.pusher.pushnotifications.PushNotificationReceivedListener;
+import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.reporting.FCMMessageReceiver;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SHARED_PREFS = "handy-shared-prefs";
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PushNotifications.start(getApplicationContext(), "0a915ad4-4103-4743-96ed-c2d40f7bbe1c");
 
         mUserService = new UserService(this);
 
@@ -158,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void resetMenu() {
+        PushNotifications.clearDeviceInterests();
         if (mUserService.isUserLoggedIn()) {
             mNavTitle.setText(mUserService.getLoggedInUserName());
             mNavSubtitle.setText(mUserService.getLoggedInUserEmail());
@@ -166,6 +175,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mMyProfile.setVisible(true);
             mMyMessages.setVisible(true);
             mSignOut.setVisible(true);
+
+            if (mUserService.getIsHandyUserLoggedIn()) {
+                String trade = mUserService.getLoggedInUserTrade();
+                PushNotifications.addDeviceInterest(trade);
+                PushNotifications.addDeviceInterest(mUserService.getLoggedInUserEmail());
+            } else {
+                PushNotifications.clearDeviceInterests();
+            }
         } else {
             mNavTitle.setText(getResources().getString(R.string.header_title));
             mNavSubtitle.setText(getResources().getString(R.string.header_subtitle));
