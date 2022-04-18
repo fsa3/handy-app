@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361851721040",
+    "project_id": "handy-786f0",
+    "storage_bucket": "handy-786f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361851721040:android:559bd21a6f0ad96d75c855",
+        "android_client_info": {
+          "package_name": "is.hi.handy_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361851721040-icgaal3sa10o7l8lao6b2bmksahjs16d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9MPcD3RJwS5p0RVNheUuKh2eFxzfaVuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361851721040-icgaal3sa10o7l8lao6b2bmksahjs16d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
