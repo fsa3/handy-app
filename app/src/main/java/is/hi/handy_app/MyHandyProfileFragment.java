@@ -87,7 +87,9 @@ public class MyHandyProfileFragment extends Fragment {
             @Override
             public void onSuccess(List<Ad> result) {
                 mAds = result;
-                setUserActiveAds();
+                if (mAds.size() > 0) {
+                    setUserActiveAds();
+                }
             }
 
             @Override
