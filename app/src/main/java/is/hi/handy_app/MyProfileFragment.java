@@ -1,8 +1,12 @@
 package is.hi.handy_app;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -58,6 +63,8 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_my_profile, container, false);
 
+        ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_my_profile);
+
         mNameInput = view.findViewById(R.id.edit_name_myProfile);
         mEmailInput = view.findViewById(R.id.edit_email_myProfile);
         mDescriptionInput = view.findViewById(R.id.About_me_myProfile);
@@ -80,20 +87,7 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-        mAdService.findByUser(userId, new NetworkCallback<List<Ad>>() {
-            @Override
-            public void onSuccess(List<Ad> result) {
-                mAds = result;
-                if (mAds.size() > 0) {
-                    setUserActiveAds();
-                }
-            }
-
-            @Override
-            public void onaFailure(String errorString) {
-
-            }
-        });
+        getAds(userId);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +158,23 @@ public class MyProfileFragment extends Fragment {
         return view;
     }
 
+    private void getAds(long userId) {
+        mAdService.findByUser(userId, new NetworkCallback<List<Ad>>() {
+            @Override
+            public void onSuccess(List<Ad> result) {
+                mAds = result;
+                if (mAds.size() > 0) {
+                    setUserActiveAds();
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
+            }
+        });
+    }
+
     private void setUserInfo() {
         mNameInput.setText(mUser.getName());
         mEmailInput.setText(mUser.getEmail());
@@ -174,5 +185,34 @@ public class MyProfileFragment extends Fragment {
         AdsAdapter adapter = new AdsAdapter(mContext, mAds);
         mActiveAds.setAdapter(adapter);
         AdsAdapter.setDynamicHeight(mActiveAds);
+        mActiveAds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
+                startActivityForResult(intent, AdvertisementsFragment.OPEN_AD_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AdvertisementsFragment.OPEN_AD_REQUEST_CODE && resultCode == RESULT_OK) {
+            getAds(mUser.getID());
+            assert data != null;
+            if (data.getBooleanExtra(AdActivity.AD_SUCCESSFULLY_DELETED_EXTRA, false)) {
+                Snackbar snackbar = Snackbar.make(mActiveAds, "Ad successfully deleted", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else if (data.getStringExtra(AdActivity.SHOW_TRADE) != null) {
+                ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_handymen);
+                Fragment handymenFragment = new HandymenFragment(data.getStringExtra(AdActivity.SHOW_TRADE));
+                FragmentManager fragmentManager = MyProfileFragment.this.getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, handymenFragment)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
+        }
     }
 }
