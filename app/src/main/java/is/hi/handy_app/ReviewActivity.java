@@ -1,19 +1,24 @@
 package is.hi.handy_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Review;
+import is.hi.handy_app.Library.ReviewAdapter;
+import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.ReviewService;
 
 
@@ -21,7 +26,7 @@ public class ReviewActivity extends AppCompatActivity {
     private static final String EXTRA_HANDY = "is.hi.handy_app.handyuser";
     RecyclerView mRecyclerView;
     List<Review> mReviewList;
-    //ReviewAdapter mReviewAdapter;
+    ReviewAdapter mReviewAdapter;
     ReviewService mReviewService;
     HandyUser mHandyUser;
     TextView mbanner;
@@ -38,7 +43,7 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
+
         setContentView(R.layout.activity_review);
 
         mReviewService = new ReviewService(this);
@@ -60,13 +65,13 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-         */
+
 
 
     }
 
     private void displayItems(){
-        /*
+
         mRecyclerView = findViewById(R.id.recycler_reviews);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
@@ -79,7 +84,6 @@ public class ReviewActivity extends AppCompatActivity {
                 mRecyclerView.setAdapter(mReviewAdapter);
 
 
-
             }
 
             @Override
@@ -87,6 +91,6 @@ public class ReviewActivity extends AppCompatActivity {
                 Toast.makeText(ReviewActivity.this, errorString, Toast.LENGTH_SHORT).show();
             }
         });
-         */
+
     }
 }
