@@ -1,13 +1,21 @@
 package is.hi.handy_app.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PortfolioItem {
 
-    private Long ID;
-    private String title;
-    private String description;
-    private String location;
-    private Image image;
-    private String stringImage;
+    @SerializedName("id")
+    private Long mID;
+    @SerializedName("title")
+    private String mTitle;
+    @SerializedName("description")
+    private String mDescription;
+    @SerializedName("location")
+    private String mLocation;
+    @SerializedName("image")
+    private Image mImage;
+    @SerializedName("stringImage")
+    private String mStringImage;
 
     private HandyUser user;
 
@@ -15,33 +23,34 @@ public class PortfolioItem {
     }
 
     public PortfolioItem(String title, String description, String location, HandyUser handyman) {
-        this.title = title;
-        this.description = description;
+        mTitle = title;
+        mDescription = description;
+        mLocation = location;
         this.user = handyman;
     }
 
     public Long getID() {
-        return ID;
+        return mID;
     }
 
     public void setID(Long ID) {
-        this.ID = ID;
+        this.mID = ID;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.mDescription = description;
     }
 
     public HandyUser getUser() {
@@ -53,27 +62,27 @@ public class PortfolioItem {
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.mLocation = location;
     }
 
     public Image getImage() {
-        return image;
+        return mImage;
     }
 
     public void setImage(Image image) {
-        this.image = image;
+        this.mImage = image;
     }
 
     public String getStringImage() {
-        return stringImage;
+        return mStringImage;
     }
 
     public void setStringImage(String stringImage) {
-        this.stringImage = stringImage;
+        this.mStringImage = stringImage;
     }
 }
 
