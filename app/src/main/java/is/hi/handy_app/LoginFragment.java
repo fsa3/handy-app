@@ -1,5 +1,7 @@
 package is.hi.handy_app;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,9 +29,12 @@ import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.UserService;
 
 public class LoginFragment extends Fragment {
+    public static int CREATE_ACCOUNT_REQUEST_CODE = 223;
+
     private Context mContext;
     private UserService mUserService;
 
+    private View mView;
     private EditText mEmailText;
     private EditText mPasswordText;
     private Button mLoginButton;
@@ -48,6 +53,8 @@ public class LoginFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ((MainActivity) LoginFragment.this.requireActivity()).hideSearch();
+
+        mView = view;
 
         mCreateAccLink = (TextView) view.findViewById(R.id.noAccLink);
 
@@ -76,13 +83,12 @@ public class LoginFragment extends Fragment {
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
 
-                        Snackbar snackbar = Snackbar.make(view, "Logged in as " + result.getName(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(view, "Signed in as " + result.getName(), Snackbar.LENGTH_LONG);
                         snackbar.show();
                     }
 
                     @Override
                     public void onaFailure(String errorString) {
-                        Toast.makeText(mContext, "Not logged in", Toast.LENGTH_SHORT).show();
                         mProgressBar.setVisibility(View.GONE);
                         mLoginMessage.setText(getResources().getString(R.string.login_failed));
                         mLoginMessage.setVisibility(View.VISIBLE);
@@ -94,11 +100,29 @@ public class LoginFragment extends Fragment {
         mCreateAccLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, RegisterUserActivity.class));
+                startActivityForResult(new Intent(mContext, RegisterUserActivity.class), CREATE_ACCOUNT_REQUEST_CODE);
             }
         });
 
-
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREATE_ACCOUNT_REQUEST_CODE && resultCode == RESULT_OK) {
+            assert data != null;
+            if (data.getBooleanExtra(RegisterUserActivity.USER_SUCCESSFULLY_POSTED_EXTRA, false)) {
+                Snackbar snackbar = Snackbar.make(mView, "Account successfully created, please sign in", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+            else if (data.getBooleanExtra(RegisterHandyUserActivity.HANDY_USER_SUCCESSFULLY_POSTED_EXTRA, false)) {
+                Snackbar snackbar = Snackbar.make(mView, "Handyman account successfully created, please sign in", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+            else if (data.getBooleanExtra(RegisterUserActivity.CREATE_HANDYMAN_ACCOUNT, false)) {
+                startActivityForResult(new Intent(mContext, RegisterHandyUserActivity.class), CREATE_ACCOUNT_REQUEST_CODE);
+            }
+        }
     }
 }

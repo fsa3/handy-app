@@ -21,6 +21,7 @@ import is.hi.handy_app.Services.UserService;
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static String USER_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.user_successfully_posted";
+    public static String CREATE_HANDYMAN_ACCOUNT = "is.hi.handy_app.user_create_handyman_account";
 
     private UserService mUserService;
 
@@ -52,7 +53,10 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         findViewById(R.id.noHandyAccLink).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterUserActivity.this, RegisterHandyUserActivity.class));
+                Intent data = new Intent();
+                data.putExtra(CREATE_HANDYMAN_ACCOUNT, true);
+                setResult(RESULT_OK, data);
+                finish();
             }
         });
     }
