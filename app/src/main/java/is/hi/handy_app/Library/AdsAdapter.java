@@ -65,16 +65,13 @@ public class AdsAdapter extends ArrayAdapter<Ad> {
 
         int totalHeight = 0;
         int items = gridViewAdapter.getCount();
-        int rows = 0;
 
         View listItem = gridViewAdapter.getView(0, null, gridView);
         listItem.measure(0, 0);
-        totalHeight = listItem.getMeasuredHeight();
+        totalHeight = listItem.getMeasuredHeight()+45;
 
-        float x = 1;
         if( items > 2 ){
-            x = items/2;
-            rows = (int) (x + 1);
+            int rows = (int) Math.ceil(items/2.0);
             totalHeight *= rows;
         }
 

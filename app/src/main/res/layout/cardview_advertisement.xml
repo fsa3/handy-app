@@ -22,7 +22,6 @@
                 android:id="@+id/adcard_imageview"
                 android:layout_width="182dp"
                 android:layout_height="109dp"
-                android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher" />
             <TextView
@@ -42,7 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_below="@+id/ad_framelayout"
-            android:layout_centerHorizontal="true"
             android:padding="3dp"
             android:text="ad title"
             android:textAlignment="center"
