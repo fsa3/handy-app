@@ -113,6 +113,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/myprofile_save_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/save_myProfile"
+            app:layout_constraintTop_toBottomOf="@+id/About_me_myProfile" />
 
         <TextView
             android:id="@+id/reviewsTV_myProfile"
@@ -174,18 +181,9 @@
             app:layout_constraintTop_toBottomOf="@+id/adsTV_myProfile">
 
             <Button
-                android:id="@+id/logout_myProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log Out"
-                android:layout_margin="20sp"
-                app:layout_constraintTop_toBottomOf="@+id/adsTV_myProfile" />
-
-            <Button
                 android:id="@+id/deleteAcc_myProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20sp"
                 android:text="Delete account" />
 
         </LinearLayout>

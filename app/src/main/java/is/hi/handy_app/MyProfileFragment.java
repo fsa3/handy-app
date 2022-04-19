@@ -4,12 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -32,6 +38,10 @@ public class MyProfileFragment extends Fragment {
     private EditText mDescriptionInput;
     private GridView mActiveAds;
 
+    private Button mSaveButton;
+    private ProgressBar mSaveProgressBar;
+    private Button mDeleteAccountButton;
+
     public MyProfileFragment() {
     }
 
@@ -52,6 +62,9 @@ public class MyProfileFragment extends Fragment {
         mEmailInput = view.findViewById(R.id.edit_email_myProfile);
         mDescriptionInput = view.findViewById(R.id.About_me_myProfile);
         mActiveAds = view.findViewById(R.id.adsTV_myProfile);
+        mSaveButton = view.findViewById(R.id.save_myProfile);
+        mSaveProgressBar = view.findViewById(R.id.myprofile_save_progressbar);
+        mDeleteAccountButton = view.findViewById(R.id.deleteAcc_myProfile);
 
         long userId = mUserService.getLoggedInUserId();
         mUserService.getUser(userId, new NetworkCallback<User>() {
@@ -79,6 +92,72 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onaFailure(String errorString) {
 
+            }
+        });
+
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSaveProgressBar.setVisibility(View.VISIBLE);
+                mUser.setName(mNameInput.getText().toString());
+                mUser.setEmail(mEmailInput.getText().toString());
+                mUser.setInfo(mDescriptionInput.getText().toString());
+
+                mUserService.saveUser(mUser, true, new NetworkCallback<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        mUser = result;
+                        setUserInfo();
+                        Snackbar snackbar = Snackbar.make(view, "Profile updated", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        mUserService.login(mUser.getEmail(), mUser.getPassword(), new NetworkCallback<User>() {
+                            @Override
+                            public void onSuccess(User result) {
+                                ((MainActivity) mContext).resetMenu();
+                                mSaveProgressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onaFailure(String errorString) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onaFailure(String errorString) {
+
+                    }
+                });
+            }
+        });
+
+        mDeleteAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUserService.deleteUser(mUser, new NetworkCallback<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        ((MainActivity) mContext).resetMenu();
+
+                        Fragment handymenFragment = new HandymenFragment();
+                        FragmentManager fragmentManager = MyProfileFragment.this.getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, handymenFragment)
+                                .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+
+                        Snackbar snackbar = Snackbar.make(view, "Account successfully deleted", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+
+                    @Override
+                    public void onaFailure(String errorString) {
+                        Snackbar snackbar = Snackbar.make(view, "Failed to delete account " + errorString, Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                });
             }
         });
 

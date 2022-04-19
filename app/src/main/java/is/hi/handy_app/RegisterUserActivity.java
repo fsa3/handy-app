@@ -106,7 +106,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         user.setEmail(email);
         user.setPassword(password);
         Log.d("user to create", user.getName());
-        mUserService.saveUser(user, new NetworkCallback<User>() {
+        mUserService.saveUser(user, false, new NetworkCallback<User>() {
             @Override
             public void onSuccess(User result) {
                 Intent data = new Intent();

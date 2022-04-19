@@ -160,9 +160,12 @@ public class UserService {
         return userId != 0;
     }
 
-    public void saveUser(User user, NetworkCallback<User> callback) {
+    public void saveUser(User user, boolean update, NetworkCallback<User> callback) {
         JSONObject body = new JSONObject();
         try {
+            if (update) {
+                body.put("id", user.getID());
+            }
             body.put("name", user.getName());
             body.put("email", user.getEmail());
             body.put("password", user.getPassword());
@@ -171,7 +174,13 @@ public class UserService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mNetworkManager.sendRequestWithBody("/createuser", Request.Method.POST, body, new NetworkCallback<String>() {
+        String url = "/createuser";
+        int method = Request.Method.POST;
+        if (update) {
+            url = "/user";
+            method = Request.Method.PATCH;
+        }
+        mNetworkManager.sendRequestWithBody(url, method, body, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
@@ -188,18 +197,28 @@ public class UserService {
 
     }
 
-    public void saveHandyUser(HandyUser handyUser, NetworkCallback<HandyUser> callback) {
+    public void saveHandyUser(HandyUser handyUser, boolean update, NetworkCallback<HandyUser> callback) {
         JSONObject body = new JSONObject();
         try {
+            if (update) {
+                body.put("id", handyUser.getID());
+            }
             body.put("name", handyUser.getName());
             body.put("email", handyUser.getEmail());
             body.put("password", handyUser.getPassword());
             body.put("info", handyUser.getInfo());
             body.put("trade", handyUser.getTrade());
+            body.put("hourlyRate", handyUser.getHourlyRate());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mNetworkManager.sendRequestWithBody("/createhandyuser", Request.Method.POST, body, new NetworkCallback<String>() {
+        String url = "/createhandyuser";
+        int method = Request.Method.POST;
+        if (update) {
+            url = "/handyuser";
+            method = Request.Method.PATCH;
+        }
+        mNetworkManager.sendRequestWithBody(url, method, body, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
@@ -211,6 +230,22 @@ public class UserService {
             @Override
             public void onaFailure(String errorString) {
                 callback.onaFailure("HandyUser not saved: " + errorString);
+            }
+        });
+    }
+
+    public void deleteUser(User user, NetworkCallback<User> callback) {
+        mNetworkManager.sendRequest("/user/" + user.getID(), Request.Method.DELETE, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                logout();
+                callback.onSuccess(null);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                logout();
+                callback.onSuccess(null);
             }
         });
     }

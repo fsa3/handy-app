@@ -104,7 +104,7 @@ public class RegisterHandyUserActivity extends AppCompatActivity implements View
             handyUser.setPassword(password);
             handyUser.setTrade(trade);
 
-            mUserService.saveHandyUser(handyUser, new NetworkCallback<HandyUser>() {
+            mUserService.saveHandyUser(handyUser, false, new NetworkCallback<HandyUser>() {
                 @Override
                 public void onSuccess(HandyUser result) {
                     Intent data = new Intent();
