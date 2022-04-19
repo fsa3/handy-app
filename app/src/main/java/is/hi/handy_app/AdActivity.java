@@ -75,6 +75,11 @@ public class AdActivity extends AppCompatActivity {
         mAdDescription.setText(mAd.getDescription());
         mAdAdvertiser.setText(String.format(getResources().getString(R.string.posted_by), mAd.getUser().getName()));
 
+        if (!mUserService.isUserLoggedIn()) {
+            mAdMessageDeleteButton.setEnabled(false);
+            mAdMessageDeleteButton.setText(R.string.sign_in_to_message_advertiser);
+        }
+
         mAdTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

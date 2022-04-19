@@ -31,12 +31,14 @@ import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Library.AdsAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
+import is.hi.handy_app.Services.UserService;
 
 public class AdvertisementsFragment extends Fragment {
     public static int NEW_AD_REQUEST_CODE = 201;
     public static int OPEN_AD_REQUEST_CODE = 202;
 
     private Context mContext;
+    private UserService mUserService;
     private AdService mAdService;
     private List<Ad> mAds;
 
@@ -51,6 +53,7 @@ public class AdvertisementsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = AdvertisementsFragment.this.getActivity();
         mAdService = new AdService(mContext);
+        mUserService = new UserService(mContext);
 
         View view =  inflater.inflate(R.layout.fragment_advertisements, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.ads_progressbar);
@@ -58,6 +61,10 @@ public class AdvertisementsFragment extends Fragment {
         mErrorText = (TextView) view.findViewById(R.id.ads_error);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.ads_swipe);
         mCreateAdButton = view.findViewById(R.id.ads_create_new);
+
+        if (!mUserService.isUserLoggedIn()) {
+            mCreateAdButton.setVisibility(View.GONE);
+        }
 
         getAds(null);
 
