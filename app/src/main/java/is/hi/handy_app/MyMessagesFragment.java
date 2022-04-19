@@ -27,8 +27,6 @@ import is.hi.handy_app.Services.UserService;
 
 
 public class MyMessagesFragment extends Fragment {
-    final private static int OPEN_MESSAGES_REQUEST_CODE = 505;
-
     private Context mContext;
     private MessageService mMessageService;
     private UserService mUserService;
@@ -91,11 +89,11 @@ public class MyMessagesFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = MessagesActivity.newIntent(mContext, mMessageUsers.get(i).getID(), mMessageUsers.get(i).getName());
-                        startActivityForResult(intent, OPEN_MESSAGES_REQUEST_CODE);
+                        startActivity(intent);
                     }
                 });
                 if (mMessageUsers.size() == 0) {
-                    mErrorText.setText("No messages found");
+                    mErrorText.setText(R.string.no_messages);
                     mErrorText.setVisibility(View.VISIBLE);
                 }
             }

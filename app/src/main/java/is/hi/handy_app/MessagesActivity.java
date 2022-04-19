@@ -7,7 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -30,6 +37,8 @@ public class MessagesActivity extends AppCompatActivity {
 
     private RecyclerView mMessagesRecyclerView;
     private TextView mMessagesHeader;
+    private EditText mMessageField;
+    private Button mSendButton;
 
     public static Intent newIntent(Context packageContext, long userId, String userName) {
         Intent i = new Intent(packageContext, MessagesActivity.class);
@@ -51,8 +60,38 @@ public class MessagesActivity extends AppCompatActivity {
 
         mMessagesRecyclerView = findViewById(R.id.messages_recycler_messages_list);
         mMessagesHeader = findViewById(R.id.messages_header);
+        mMessageField = findViewById(R.id.messages_edit_message);
+        mSendButton = findViewById(R.id.messages_send_button);
 
         mMessagesHeader.setText(getIntent().getStringExtra(EXTRA_USER_FROM_NAME));
+
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = mMessageField.getText().toString().trim();
+
+                if(content.isEmpty()){
+                    mMessageField.setError("Please enter a message");
+                    mMessageField.requestFocus();
+                    return;
+                }
+
+                mMessageService.sendMessage(mUserIdSent, mUserIdReceived, content, new NetworkCallback<Message>() {
+                    @Override
+                    public void onSuccess(Message result) {
+                        getMessages();
+                        mMessageField.setText("");
+                    }
+
+                    @Override
+                    public void onaFailure(String errorString) {
+                        Snackbar snackbar = Snackbar.make(mMessagesRecyclerView, "Failed to send message", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                });
+            }
+        });
+
         getMessages();
     }
 
@@ -62,8 +101,10 @@ public class MessagesActivity extends AppCompatActivity {
             public void onSuccess(List<Message> result) {
                 mMessages = result;
                 MessageAdapter mMessageAdapter = new MessageAdapter(MessagesActivity.this, mMessages);
-                mMessagesRecyclerView.setLayoutManager(new LinearLayoutManager(MessagesActivity.this));
+                LinearLayoutManager layoutManager = new LinearLayoutManager(MessagesActivity.this);
+                mMessagesRecyclerView.setLayoutManager(layoutManager);
                 mMessagesRecyclerView.setAdapter(mMessageAdapter);
+                layoutManager.scrollToPosition(mMessages.size() - 1);
             }
 
             @Override

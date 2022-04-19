@@ -111,6 +111,10 @@ public class AdActivity extends AppCompatActivity {
                         }
                     });
                 }
+                else {
+                    Intent i = MessagesActivity.newIntent(AdActivity.this, mAd.getUser().getID(), mAd.getUser().getName());
+                    startActivity(i);
+                }
             }
         });
     }
