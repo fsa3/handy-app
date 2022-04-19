@@ -13,12 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
 import is.hi.handy_app.Services.UserService;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pusher.pushnotifications.PushNotificationReceivedListener;
 import com.pusher.pushnotifications.PushNotifications;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem mMyProfile;
     private MenuItem mMyMessages;
     private MenuItem mSignOut;
+
+    private FrameLayout mFragmentContainer;
 
     private DrawerLayout mDrawer;
 
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mFragmentContainer = findViewById(R.id.fragment_container);
 
         mDrawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mUserService.logout();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HandymenFragment()).commit();
                 this.resetMenu();
+                Snackbar snackbar = Snackbar.make(mFragmentContainer, "Successfully signed out", Snackbar.LENGTH_LONG);
+                snackbar.show();
                 break;
             case R.id.nav_my_profile:
                 if (mUserService.getIsHandyUserLoggedIn()) {

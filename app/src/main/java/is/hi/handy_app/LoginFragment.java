@@ -15,6 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
@@ -61,9 +65,19 @@ public class LoginFragment extends Fragment {
                 mUserService.login(mEmailText.getText().toString(), mPasswordText.getText().toString(), new NetworkCallback<User>() {
                     @Override
                     public void onSuccess(User result) {
-                        Toast.makeText(mContext, "Logged in as " + result.getName(), Toast.LENGTH_SHORT).show();
                         mProgressBar.setVisibility(View.GONE);
                         ((MainActivity) mContext).resetMenu();
+
+                        Fragment handymenFragment = new HandymenFragment();
+                        FragmentManager fragmentManager = LoginFragment.this.getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, handymenFragment)
+                                .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+
+                        Snackbar snackbar = Snackbar.make(view, "Logged in as " + result.getName(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
 
                     @Override
