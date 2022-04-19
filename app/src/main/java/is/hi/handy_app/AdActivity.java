@@ -26,6 +26,8 @@ import is.hi.handy_app.Services.UserService;
 
 public class AdActivity extends AppCompatActivity {
     private static final String EXTRA_AD = "is.hi.handy_app.ad";
+    public static final String AD_SUCCESSFULLY_DELETED_EXTRA = "is.hi.handy_app.ad_deleted";
+    public static final String SHOW_TRADE = "is.hi.handy_app.ad_to_handymen_trade";
 
     private UserService mUserService;
     private AdService mAdService;
@@ -83,15 +85,10 @@ public class AdActivity extends AppCompatActivity {
         mAdTrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Fragment handymenFragment = new HandymenFragment(mAd.getTrade().toString());
-                FragmentManager fragmentManager = AdFragment.this.getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, handymenFragment)
-                        .addToBackStack(null)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
-                 */
+                Intent data = new Intent();
+                data.putExtra(SHOW_TRADE, mAd.getTrade().toString());
+                setResult(RESULT_OK, data);
+                finish();
             }
         });
 
@@ -106,6 +103,7 @@ public class AdActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Ad result) {
                             Intent data = new Intent();
+                            data.putExtra(AD_SUCCESSFULLY_DELETED_EXTRA, true);
                             setResult(RESULT_OK, data);
                             finish();
                         }

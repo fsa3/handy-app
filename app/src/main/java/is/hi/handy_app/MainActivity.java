@@ -1,5 +1,6 @@
 package is.hi.handy_app;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout mDrawer;
 
+    public NavigationView mNavigationView;
     private SearchView mSearchView;
     private MenuItem mSearchMenu;
     private Boolean mSearchVisible = true;
@@ -63,14 +65,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentContainer = findViewById(R.id.fragment_container);
 
         mDrawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        View navHeader = navigationView.getHeaderView(0);
+        View navHeader = mNavigationView.getHeaderView(0);
         mNavTitle = navHeader.findViewById(R.id.nav_header_title);
         mNavSubtitle = navHeader.findViewById(R.id.nav_header_subtitle);
 
-        Menu navMenu = navigationView.getMenu();
+        Menu navMenu = mNavigationView.getMenu();
         mSignIn = navMenu.findItem(R.id.nav_login);
         mMyProfile = navMenu.findItem(R.id.nav_my_profile);
         mMyMessages = navMenu.findItem(R.id.nav_my_messages);
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HandymenFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_handymen);
+        mNavigationView.setCheckedItem(R.id.nav_handymen);
     }
 
     @Override

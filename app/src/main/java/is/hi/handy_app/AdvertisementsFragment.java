@@ -55,6 +55,8 @@ public class AdvertisementsFragment extends Fragment {
         mAdService = new AdService(mContext);
         mUserService = new UserService(mContext);
 
+        ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_advertisements);
+
         View view =  inflater.inflate(R.layout.fragment_advertisements, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.ads_progressbar);
         mGridView = (GridView) view.findViewById(R.id.ads_gridview);
@@ -114,8 +116,20 @@ public class AdvertisementsFragment extends Fragment {
         }
         else if (requestCode == OPEN_AD_REQUEST_CODE && resultCode == RESULT_OK) {
             getAds(null);
-            Snackbar snackbar = Snackbar.make(mGridView, "Ad successfully deleted", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            assert data != null;
+            if (data.getBooleanExtra(AdActivity.AD_SUCCESSFULLY_DELETED_EXTRA, false)) {
+                Snackbar snackbar = Snackbar.make(mGridView, "Ad successfully deleted", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else if (data.getStringExtra(AdActivity.SHOW_TRADE) != null) {
+                ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_handymen);
+                Fragment handymenFragment = new HandymenFragment(data.getStringExtra(AdActivity.SHOW_TRADE));
+                FragmentManager fragmentManager = AdvertisementsFragment.this.getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, handymenFragment)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
         }
     }
 
@@ -133,15 +147,6 @@ public class AdvertisementsFragment extends Fragment {
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        /*
-                        Fragment adFragment = new AdActivity(mAds.get(i));
-                        FragmentManager fragmentManager = AdvertisementsFragment.this.getActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, adFragment)
-                                .addToBackStack(null)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .commit();
-                         */
                         Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
                         startActivityForResult(intent, OPEN_AD_REQUEST_CODE);
                     }
