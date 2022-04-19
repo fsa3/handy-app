@@ -39,6 +39,9 @@ import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.UserService;
 
 public class MyHandyProfileFragment extends Fragment {
+    public static int NEW_PORTFOLIOITEM_REQUEST_CODE = 301;
+    public static int OPEN_PORTFOLIOITEM_REQUEST_CODE = 302;
+
     private Context mContext;
     private HandyUser mUser;
     private List<Ad> mAds;
@@ -55,6 +58,7 @@ public class MyHandyProfileFragment extends Fragment {
     private Button mSaveButton;
     private ProgressBar mSaveProgressBar;
     private Button mDeleteAccountButton;
+    private Button mCreatePortfolioItemButton;
 
     private List<String> mTrades = Stream.of(Trade.values())
             .map(Trade::name)
@@ -87,6 +91,7 @@ public class MyHandyProfileFragment extends Fragment {
         mSaveButton = view.findViewById(R.id.save_myhProfile);
         mSaveProgressBar = view.findViewById(R.id.myhprofile_save_progressbar);
         mDeleteAccountButton = view.findViewById(R.id.deleteAcc_myhProfile);
+        mCreatePortfolioItemButton = view.findViewById(R.id.addToPortfolio_myhProfile);
 
         mTradeInput.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, mTrades));
 
@@ -142,6 +147,13 @@ public class MyHandyProfileFragment extends Fragment {
 
                     }
                 });
+            }
+        });
+
+        mCreatePortfolioItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(mContext, CreatePortfolioItemActivity.class), OPEN_PORTFOLIOITEM_REQUEST_CODE);
             }
         });
 

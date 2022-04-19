@@ -47,6 +47,7 @@ public class MyProfileFragment extends Fragment {
     private ProgressBar mSaveProgressBar;
     private Button mDeleteAccountButton;
 
+
     public MyProfileFragment() {
     }
 
@@ -125,6 +126,8 @@ public class MyProfileFragment extends Fragment {
                 });
             }
         });
+
+
 
         mDeleteAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
