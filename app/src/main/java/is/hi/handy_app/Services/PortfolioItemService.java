@@ -1,6 +1,7 @@
 package is.hi.handy_app.Services;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -11,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-
+import java.util.List;
 
 
 import is.hi.handy_app.Entities.PortfolioItem;
@@ -27,13 +28,30 @@ public class PortfolioItemService {
         mUserService = new UserService(context);
     }
 
+    public void getUserPortfolioItems(long userId, NetworkCallback<List<PortfolioItem>> callback) {
+        mNetworkManager.sendRequest("/portfolioItem/" + userId, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<PortfolioItem>>(){}.getType();
+                List<PortfolioItem> portfolioItems = gson.fromJson(result, listType);
+                callback.onSuccess(portfolioItems);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Failed to get portfolio: " + errorString);
+            }
+        });
+    }
+
     public void savePortfolioItem(PortfolioItem item, byte[] image, NetworkCallback<PortfolioItem> callback) {
         JSONObject body = new JSONObject();
         try {
             body.put("title", item.getTitle());
             body.put("location", item.getLocation());
             body.put("description", item.getDescription());
-            body.put("handyUser", mUserService.getLoggedInUserId());
+            body.put("user", mUserService.getLoggedInUserId());
             JSONArray imageBytes = new JSONArray(image);
             body.put("imageBytes", imageBytes);
         } catch (JSONException e) {
@@ -43,8 +61,7 @@ public class PortfolioItemService {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
-                Type portfolioItemType = new TypeToken<PortfolioItem>() {
-                }.getType();
+                Type portfolioItemType = new TypeToken<PortfolioItem>(){}.getType();
                 PortfolioItem savedItem = gson.fromJson(result, portfolioItemType);
                 callback.onSuccess(savedItem);
             }

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
@@ -31,11 +32,14 @@ import java.util.stream.Stream;
 
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Library.AdsAdapter;
+import is.hi.handy_app.Library.PortfolioItemAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
+import is.hi.handy_app.Services.PortfolioItemService;
 import is.hi.handy_app.Services.UserService;
 
 public class MyHandyProfileFragment extends Fragment {
@@ -45,8 +49,10 @@ public class MyHandyProfileFragment extends Fragment {
     private Context mContext;
     private HandyUser mUser;
     private List<Ad> mAds;
+    private List<PortfolioItem> mPortfolioItems;
     private UserService mUserService;
     private AdService mAdService;
+    private PortfolioItemService mPortfolioItemService;
 
     private EditText mNameInput;
     private EditText mEmailInput;
@@ -54,6 +60,7 @@ public class MyHandyProfileFragment extends Fragment {
     private Spinner mTradeInput;
     private EditText mHourlyRateInput;
     private GridView mActiveAds;
+    private ListView mPortfolioItemsList;
 
     private Button mSaveButton;
     private ProgressBar mSaveProgressBar;
@@ -73,6 +80,7 @@ public class MyHandyProfileFragment extends Fragment {
         mContext = MyHandyProfileFragment.this.getActivity();
         mUserService = new UserService(mContext);
         mAdService = new AdService(mContext);
+        mPortfolioItemService = new PortfolioItemService(mContext);
     }
 
     @Override
@@ -88,6 +96,7 @@ public class MyHandyProfileFragment extends Fragment {
         mTradeInput = view.findViewById(R.id.trade_myhProfileS);
         mHourlyRateInput = view.findViewById(R.id.edit_rate_myhProfile);
         mActiveAds = view.findViewById(R.id.adsTV_myhProfile);
+        mPortfolioItemsList = view.findViewById(R.id.portfolioItems_myhProfile);
         mSaveButton = view.findViewById(R.id.save_myhProfile);
         mSaveProgressBar = view.findViewById(R.id.myhprofile_save_progressbar);
         mDeleteAccountButton = view.findViewById(R.id.deleteAcc_myhProfile);
@@ -110,6 +119,8 @@ public class MyHandyProfileFragment extends Fragment {
         });
 
         getAds(userId);
+
+        getPortfolioItems(userId);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +217,23 @@ public class MyHandyProfileFragment extends Fragment {
         });
     }
 
+    private void getPortfolioItems(long userId) {
+        mPortfolioItemService.getUserPortfolioItems(userId, new NetworkCallback<List<PortfolioItem>>() {
+            @Override
+            public void onSuccess(List<PortfolioItem> result) {
+                mPortfolioItems = result;
+                if (mPortfolioItems.size() > 0) {
+                    setPortfolioItemsList();
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
+            }
+        });
+    }
+
     private void setHandyUserInfo() {
         mNameInput.setText(mUser.getName());
         mEmailInput.setText(mUser.getEmail());
@@ -227,6 +255,12 @@ public class MyHandyProfileFragment extends Fragment {
         });
     }
 
+    private void setPortfolioItemsList() {
+        PortfolioItemAdapter adapter = new PortfolioItemAdapter(mContext, mPortfolioItems);
+        mPortfolioItemsList.setAdapter(adapter);
+        PortfolioItemAdapter.setDynamicHeight(mPortfolioItemsList);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -245,6 +279,13 @@ public class MyHandyProfileFragment extends Fragment {
                         .addToBackStack(null)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
+            }
+        } else if (requestCode == OPEN_PORTFOLIOITEM_REQUEST_CODE && resultCode == RESULT_OK) {
+            getPortfolioItems(mUser.getID());
+            assert data != null;
+            if (data.getBooleanExtra(CreatePortfolioItemActivity.PORTFOLIO_ITEM_SUCCESSFULLY_POSTED_EXTRA, false)) {
+                Snackbar snackbar = Snackbar.make(mPortfolioItemsList, "Successfully added to your portfolio", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         }
     }
