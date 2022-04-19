@@ -84,12 +84,6 @@ public class RegisterHandyUserActivity extends AppCompatActivity implements View
                 return;
             }
 
-            if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                mEmailText.setError("Please provide valid email");
-                mEmailText.requestFocus();
-                return;
-            }
-
             if(password.isEmpty()){
                 mPasswordText.setError("Password is required");
                 mPasswordText.requestFocus();

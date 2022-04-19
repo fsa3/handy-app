@@ -1,6 +1,7 @@
 package is.hi.handy_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,6 +27,8 @@ import is.hi.handy_app.Services.UserService;
 
 
 public class MyMessagesFragment extends Fragment {
+    final private static int OPEN_MESSAGES_REQUEST_CODE = 505;
+
     private Context mContext;
     private MessageService mMessageService;
     private UserService mUserService;
@@ -87,7 +90,8 @@ public class MyMessagesFragment extends Fragment {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(mContext, "Clicked " + mMessageUsers.get(i).getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = MessagesActivity.newIntent(mContext, mMessageUsers.get(i).getID(), mMessageUsers.get(i).getName());
+                        startActivityForResult(intent, OPEN_MESSAGES_REQUEST_CODE);
                     }
                 });
                 if (mMessageUsers.size() == 0) {

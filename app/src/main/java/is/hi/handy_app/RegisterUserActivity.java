@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,12 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
         mProgressBar = (ProgressBar) findViewById(R.id.loading);
 
+        findViewById(R.id.noHandyAccLink).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterUserActivity.this, RegisterHandyUserActivity.class));
+            }
+        });
     }
 
     @Override
@@ -59,12 +66,11 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
             case R.id.registerUser:
                 registerUser();
                 break;
-            case R.id. noHandyAccLink:
-                startActivity(new Intent(this, RegisterHandyUserActivity.class));
         }
     }
 
     private void registerUser() {
+        Log.d("clicked", "register user clicked!");
         String name = mNameText.getText().toString().trim();
         String email = mEmailText.getText().toString().trim();
         String password = mPasswordText.getText().toString().trim();
@@ -77,12 +83,6 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
         if(email.isEmpty()){
             mEmailText.setError("Email is required");
-            mEmailText.requestFocus();
-            return;
-        }
-
-        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            mEmailText.setError("Please provide valid email");
             mEmailText.requestFocus();
             return;
         }
@@ -105,7 +105,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-
+        Log.d("user to create", user.getName());
         mUserService.saveUser(user, new NetworkCallback<User>() {
             @Override
             public void onSuccess(User result) {

@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import is.hi.handy_app.Entities.Message;
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
@@ -35,6 +36,23 @@ public class MessageService {
             @Override
             public void onaFailure(String errorString) {
                 callback.onaFailure("Failed to get my messages: " + errorString);
+            }
+        });
+    }
+
+    public void getMessagesBetweenUsers(long userId1, long userId2, NetworkCallback<List<Message>> callback) {
+        mNetworkManager.sendRequest("/messages-between/" + userId1 + "/" + userId2, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Message>>(){}.getType();
+                List<Message> messages = gson.fromJson(result, listType);
+                callback.onSuccess(messages);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Failed to get messages: " + errorString);
             }
         });
     }
