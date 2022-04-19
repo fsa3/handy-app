@@ -58,6 +58,9 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.registerUser:
                 registerUser();
+                break;
+            case R.id. noHandyAccLink:
+                startActivity(new Intent(this, RegisterHandyUserActivity.class));
         }
     }
 
