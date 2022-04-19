@@ -76,7 +76,7 @@ public class HandyProfileFragment extends Fragment {
        String finalResultRating = new Double(resultRating).toString();
        mAverageRating.setText("My Rating: " + finalResultRating);
 
-       mHandyInfo.setText("Ég er rosa handy handy handy");
+       mHandyInfo.setText(mHandyUser.getInfo());
 
        mButtonSubmit = (Button) view.findViewById(R.id.submit_button);
        mButtonSubmit.setOnClickListener(new View.OnClickListener() {

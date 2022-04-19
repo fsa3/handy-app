@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import is.hi.handy_app.Entities.HandyUser;
@@ -25,7 +26,7 @@ import is.hi.handy_app.Services.ReviewService;
 public class ReviewActivity extends AppCompatActivity {
     private static final String EXTRA_HANDY = "is.hi.handy_app.handyuser";
     RecyclerView mRecyclerView;
-    List<Review> mReviewList;
+    ArrayList<Review> mReviewList;
     ReviewAdapter mReviewAdapter;
     ReviewService mReviewService;
     HandyUser mHandyUser;
@@ -72,14 +73,15 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void displayItems(){
 
-        mRecyclerView = findViewById(R.id.recycler_reviews);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+
         long id = mHandyUser.getID();
         mReviewService.getMyReviews(id, new NetworkCallback<List<Review>>() {
             @Override
             public void onSuccess(List<Review> result) {
-                mReviewList = result;
+                mReviewList = (ArrayList) result;
+                mRecyclerView = findViewById(R.id.recycler_reviews);
+                mRecyclerView.setHasFixedSize(true);
+                mRecyclerView.setLayoutManager(new GridLayoutManager(ReviewActivity.this,1));
                 mReviewAdapter = new ReviewAdapter(ReviewActivity.this,mReviewList);
                 mRecyclerView.setAdapter(mReviewAdapter);
 
