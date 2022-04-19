@@ -37,36 +37,36 @@
         android:id="@+id/createPortfolioItem_location"
         android:layout_width="164dp"
         android:layout_height="46dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="148dp"
         android:ems="10"
         android:hint="Location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/createPortfolioItem_description"
-        android:layout_width="302dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="240dp"
+        android:layout_width="298dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="204dp"
         android:ems="10"
-        android:hint="Description"
         android:gravity="start"
+        android:hint="Description"
         android:inputType="text|textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_marginTop="360dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.386"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -74,15 +74,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:text="Add an image to your portfolio" />
+            android:text="Add an image to your portfolio"
+            android:textAlignment="center" />
 
         <ImageView
             android:id="@+id/createPortfolioItem_image"
             android:layout_width="200dp"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:background="@drawable/ic_baseline_add_24" />
 
     </LinearLayout>
@@ -91,11 +91,11 @@
         android:id="@+id/createPortfolioItem_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="532dp"
         android:text="Post"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

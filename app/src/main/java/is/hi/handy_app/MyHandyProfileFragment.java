@@ -152,7 +152,7 @@ public class MyHandyProfileFragment extends Fragment {
 
         mCreatePortfolioItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 startActivityForResult(new Intent(mContext, CreatePortfolioItemActivity.class), OPEN_PORTFOLIOITEM_REQUEST_CODE);
             }
         });
