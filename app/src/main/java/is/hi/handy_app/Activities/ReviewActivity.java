@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.sql.Timestamp;
 
 import is.hi.handy_app.Entities.HandyUser;
@@ -67,12 +69,17 @@ public class ReviewActivity extends AppCompatActivity {
             mReviewService.saveReview(mUserService.getLoggedInUserId(), mHandyUser.getID(), rateResult, result, new NetworkCallback<Review>() {
                 @Override
                 public void onSuccess(Review result) {
-                    Toast.makeText(ReviewActivity.this," Review received!", Toast.LENGTH_SHORT).show();
+                    mReviewInput.setText(" ");
+                    mRatingBar.setRating(0);
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.ed_review),"Your review was submitted! " ,Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
                 }
 
                 @Override
                 public void onaFailure(String errorString) {
-                    Toast.makeText(ReviewActivity.this, "Review failed!", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.ed_review),"Posting review failed, error: " + errorString,Snackbar.LENGTH_LONG);
+                    snackbar.show();
 
                 }
             });
