@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,7 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import is.hi.handy_app.Entities.Ad;
-import is.hi.handy_app.Library.AdsAdapter;
+import is.hi.handy_app.Adapters.AdsAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.UserService;

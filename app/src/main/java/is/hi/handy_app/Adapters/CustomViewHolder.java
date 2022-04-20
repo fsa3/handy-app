@@ -1,4 +1,4 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
 import android.view.View;
 import android.widget.TextView;

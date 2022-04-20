@@ -1,5 +1,6 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,17 +24,16 @@ import is.hi.handy_app.R;
 
 public class PortfolioItemAdapter extends ArrayAdapter<PortfolioItem> {
 
-    private Context context;
-    private List<PortfolioItem> items;
-    private LayoutInflater vi;
+    private final List<PortfolioItem> items;
+    private final LayoutInflater vi;
 
     public PortfolioItemAdapter(Context context, List<PortfolioItem> items) {
         super(context,0, items);
-        this.context = context;
         this.items = items;
         vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    @SuppressLint("InflateParams")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,7 +59,7 @@ public class PortfolioItemAdapter extends ArrayAdapter<PortfolioItem> {
             return;
         }
 
-        int totalHeight = 0;
+        int totalHeight;
         int items = gridViewAdapter.getCount();
 
         View listItem = gridViewAdapter.getView(0, null, listView);

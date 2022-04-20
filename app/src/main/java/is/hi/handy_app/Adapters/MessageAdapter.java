@@ -1,4 +1,4 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,15 +20,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    private Context mContext;
-    private List<Message> mMessageList;
+    private final List<Message> mMessageList;
 
-    private UserService mUserService;
+    private final UserService mUserService;
 
     public MessageAdapter(Context context, List<Message> messageList) {
-        mContext = context;
         mMessageList = messageList;
-        mUserService = new UserService(mContext);
+        mUserService = new UserService(context);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Message message = (Message) mMessageList.get(position);
+        Message message = mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -68,7 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        Message message = (Message) mMessageList.get(position);
+        Message message = mMessageList.get(position);
 
         if (message.getSender().getID() == mUserService.getLoggedInUserId()) {
             return VIEW_TYPE_MESSAGE_SENT;
@@ -77,16 +75,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
+    private static class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText, nameText;
         ImageView profileImage;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
-            messageText = (TextView) itemView.findViewById(R.id.messageTo_message_text);
-            timeText = (TextView) itemView.findViewById(R.id.messageTo_timestamp);
-            nameText = (TextView) itemView.findViewById(R.id.messagesTo_sender_name);
-            profileImage = (ImageView) itemView.findViewById(R.id.image_gchat_profile_other);
+            messageText = itemView.findViewById(R.id.messageTo_message_text);
+            timeText = itemView.findViewById(R.id.messageTo_timestamp);
+            nameText = itemView.findViewById(R.id.messagesTo_sender_name);
+            profileImage = itemView.findViewById(R.id.image_gchat_profile_other);
         }
 
         void bind(Message message) {
@@ -101,14 +99,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private class SentMessageHolder extends RecyclerView.ViewHolder {
+    private static class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView messageText, timeText;
 
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.messageFrom_message_text);
-            timeText = (TextView) itemView.findViewById(R.id.messageFrom_timestamp);
+            messageText = itemView.findViewById(R.id.messageFrom_message_text);
+            timeText = itemView.findViewById(R.id.messageFrom_timestamp);
         }
 
         void bind(Message message) {

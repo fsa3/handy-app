@@ -3,18 +3,12 @@ package is.hi.handy_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,8 +19,8 @@ import java.util.List;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.Entities.Review;
-import is.hi.handy_app.Library.PortfolioItemAdapter;
-import is.hi.handy_app.Library.ReviewAdapter;
+import is.hi.handy_app.Adapters.PortfolioItemAdapter;
+import is.hi.handy_app.Adapters.ReviewAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.PortfolioItemService;
 import is.hi.handy_app.Services.ReviewService;
@@ -93,23 +87,20 @@ public class HandyProfileActivity extends AppCompatActivity {
 
         double result = mHandyUser.getHourlyRate();
         String finalResult = Double.valueOf(result).toString();
-        mHandyHourlyRate.setText("Hourly Rate: " + finalResult + " kr.");
+        mHandyHourlyRate.setText(new StringBuilder().append(getString(R.string.hourly_rate)).append(finalResult).append(" kr.").toString());
 
         double resultRating = mHandyUser.getAverageRating();
         String finalResultRating = Double.valueOf(resultRating).toString();
-        mAverageRating.setText("Av. Rating: " + finalResultRating);
+        mAverageRating.setText(new StringBuilder().append(getString(R.string.av_rating)).append(finalResultRating).toString());
 
         mHandyInfo.setText(mHandyUser.getInfo());
 
         mButtonReview = findViewById(R.id.write_a_review);
 
 
-        mButtonReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = ReviewActivity.newIntent(HandyProfileActivity.this, mHandyUser);
-                startActivityForResult(intent, 101);
-            }
+        mButtonReview.setOnClickListener(view -> {
+            Intent intent = ReviewActivity.newIntent(HandyProfileActivity.this, mHandyUser);
+            startActivityForResult(intent, 101);
         });
 
         mButtonMessage = findViewById(R.id.send_message);
@@ -122,15 +113,12 @@ public class HandyProfileActivity extends AppCompatActivity {
             mButtonMessage.setEnabled(false);
             mButtonMessage.setText(R.string.sing_in_to_message);
             mButtonReview.setEnabled(false);
-            mButtonReview.setText("Sign in to rate");
+            mButtonReview.setText(R.string.sign_in_to_rate);
         }
 
-        mButtonMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = MessagesActivity.newIntent(HandyProfileActivity.this, mHandyUser.getID(), mHandyUser.getName());
-                startActivity(i);
-            }
+        mButtonMessage.setOnClickListener(view -> {
+            Intent i = MessagesActivity.newIntent(HandyProfileActivity.this, mHandyUser.getID(), mHandyUser.getName());
+            startActivity(i);
         });
 
         mPortfolioItemService.getUserPortfolioItems(mHandyUser.getID(), new NetworkCallback<List<PortfolioItem>>() {

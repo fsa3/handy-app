@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import is.hi.handy_app.Entities.Message;
-import is.hi.handy_app.Library.MessageAdapter;
+import is.hi.handy_app.Adapters.MessageAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.MessageService;
 import is.hi.handy_app.Services.UserService;

@@ -1,6 +1,6 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
-import android.content.ClipData;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import is.hi.handy_app.Entities.HandyUser;
@@ -16,18 +15,17 @@ import is.hi.handy_app.R;
 
 public class HandyUserAdapter extends ArrayAdapter<HandyUser> {
 
-    private Context context;
-    private List<HandyUser> items;
-    private LayoutInflater vi;
+    private final List<HandyUser> items;
+    private final LayoutInflater vi;
 
     public HandyUserAdapter(Context context, List<HandyUser> items) {
         super(context,0, items);
-        this.context = context;
         this.items = items;
         vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;

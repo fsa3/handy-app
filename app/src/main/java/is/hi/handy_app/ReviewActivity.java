@@ -1,11 +1,8 @@
 package is.hi.handy_app;
 
-import static is.hi.handy_app.Library.HandyUserAdapter.round;
+import static is.hi.handy_app.Adapters.HandyUserAdapter.round;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,15 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import is.hi.handy_app.Entities.HandyUser;
-import is.hi.handy_app.Entities.Review;
-import is.hi.handy_app.Library.ReviewAdapter;
-import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.ReviewService;
 
 

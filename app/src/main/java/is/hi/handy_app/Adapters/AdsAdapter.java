@@ -1,4 +1,4 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,18 +19,15 @@ import java.util.Base64;
 import java.util.List;
 
 import is.hi.handy_app.Entities.Ad;
-import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.R;
 
 public class AdsAdapter extends ArrayAdapter<Ad> {
 
-    private Context context;
-    private List<Ad> items;
-    private LayoutInflater vi;
+    private final List<Ad> items;
+    private final LayoutInflater vi;
 
     public AdsAdapter(Context context, List<Ad> items) {
         super(context,0, items);
-        this.context = context;
         this.items = items;
         vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -61,7 +58,7 @@ public class AdsAdapter extends ArrayAdapter<Ad> {
             return;
         }
 
-        int totalHeight = 0;
+        int totalHeight;
         int items = gridViewAdapter.getCount();
 
         View listItem = gridViewAdapter.getView(0, null, gridView);

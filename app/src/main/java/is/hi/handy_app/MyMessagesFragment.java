@@ -15,12 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import is.hi.handy_app.Entities.User;
-import is.hi.handy_app.Library.MessageUserAdapter;
+import is.hi.handy_app.Adapters.MessageUserAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.MessageService;
 import is.hi.handy_app.Services.UserService;

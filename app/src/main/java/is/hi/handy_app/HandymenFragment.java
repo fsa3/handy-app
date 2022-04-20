@@ -19,8 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.stream.Stream;
 
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Trade;
-import is.hi.handy_app.Library.HandyUserAdapter;
+import is.hi.handy_app.Adapters.HandyUserAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.UserService;
 

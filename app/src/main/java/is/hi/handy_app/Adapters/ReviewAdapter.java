@@ -1,11 +1,8 @@
-package is.hi.handy_app.Library;
+package is.hi.handy_app.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +14,9 @@ import is.hi.handy_app.R;
 
 public class ReviewAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
-    private Context mContext;
-    private List<Review> mReviewList;
-    private boolean mShowHandyman;
+    private final Context mContext;
+    private final List<Review> mReviewList;
+    private final boolean mShowHandyman;
 
     public ReviewAdapter(Context context, List<Review> reviewList, boolean showHandyman) {
         mContext = context;
