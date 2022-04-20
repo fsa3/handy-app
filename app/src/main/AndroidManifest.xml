@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Handyapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".HandyProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreatePortfolioItemActivity"
             android:exported="false" />
         <activity

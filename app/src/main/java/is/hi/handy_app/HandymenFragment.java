@@ -2,6 +2,7 @@ package is.hi.handy_app;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -139,13 +139,8 @@ public class HandymenFragment extends Fragment {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Fragment handyProfileFragment = new HandyProfileFragment(mHandyUsers.get(i));
-                        FragmentManager fragmentManager = HandymenFragment.this.getActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, handyProfileFragment)
-                                .addToBackStack(null)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .commit();
+                        Intent intent = HandyProfileActivity.newIntent(mContext, mHandyUsers.get(i));
+                        startActivity(intent);
                     }
                 });
                 if (mHandyUsers.size() == 0) {
