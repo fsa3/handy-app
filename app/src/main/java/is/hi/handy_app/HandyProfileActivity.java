@@ -113,7 +113,10 @@ public class HandyProfileActivity extends AppCompatActivity {
 
         mButtonMessage = findViewById(R.id.send_message);
 
-        if (!mUserService.isUserLoggedIn()) {
+        if (mHandyUser.getID() == mUserService.getLoggedInUserId()) {
+            mButtonMessage.setEnabled(false);
+        }
+        else if (!mUserService.isUserLoggedIn()) {
             mButtonMessage.setEnabled(false);
             mButtonMessage.setText(R.string.sing_in_to_message);
         }

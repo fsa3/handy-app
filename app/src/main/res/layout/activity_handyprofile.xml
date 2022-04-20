@@ -155,6 +155,12 @@
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="center_horizontal">
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
         <Button
             android:id="@+id/send_message"
             android:layout_width="wrap_content"
@@ -163,9 +169,14 @@
             android:text="@string/message_user"
             android:textColor="#FFF"
             android:textStyle="bold"
-            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
 
         <Button
             android:id="@+id/write_a_review"
@@ -174,11 +185,16 @@
             android:layout_gravity="center"
             android:background="@drawable/rounded_corners"
             android:text="@string/write_review"
-            android:layout_marginStart="20dp"
             android:textColor="#FFF"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
 
     </LinearLayout>
 
