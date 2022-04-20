@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ad_image"
+                android:layout_width="338dp"
+                android:layout_height="214dp"
+                android:layout_marginBottom="122dp"
+                android:contentDescription="@string/advertisement_image"
+                android:scaleType="centerCrop"
+                android:transitionName="photoToAnimate"
+                app:layout_constraintBottom_toTopOf="@+id/ad_message_delete_button"
+                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.38"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="290dp"
+                android:layout_marginBottom="17dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/ad_trade"
+                app:layout_constraintEnd_toStartOf="@+id/ad_image"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AD title" />
+
+            <Button
+                android:id="@+id/ad_trade"
+                android:layout_width="120dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="248dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/purple_700"
+                app:layout_constraintBottom_toTopOf="@+id/ad_location_container"
+                app:layout_constraintEnd_toStartOf="@+id/ad_image"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ad_title"
+                tools:ignore="TextContrastCheck"
+                tools:text="Painter" />
+
+            <LinearLayout
+                android:id="@+id/ad_location_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ad_trade"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/location"
+                    android:src="@drawable/ic_baseline_location_on_24" />
+
+                <TextView
+                    android:id="@+id/ad_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Reykjavík" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ad_date_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="273dp"
+                android:layout_marginBottom="17dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/ad_description"
+                app:layout_constraintEnd_toStartOf="@+id/ad_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ad_location_container"
+                app:layout_constraintVertical_bias="0.3"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/date_posted"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="1dp"
+                    android:src="@drawable/ic_baseline_date_range_24" />
+
+                <TextView
+                    android:id="@+id/ad_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="12.12.2022" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ad_description"
+                android:layout_width="262dp"
+                android:layout_height="339dp"
+                android:layout_margin="16dp"
+                android:layout_marginEnd="108dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/ad_advertiser"
+                app:layout_constraintEnd_toStartOf="@+id/ad_image"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ad_date_container"
+                tools:text="description here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here\ndescription here" />
+
+            <TextView
+                android:id="@+id/ad_advertiser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:paddingBottom="75dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ad_description"
+                tools:text="Posted by: Björn Borgar" />
+
+            <Button
+                android:id="@+id/ad_message_delete_button"
+                android:layout_width="276dp"
+                android:layout_height="63dp"
+                android:layout_margin="16dp"
+                android:layout_marginStart="165dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="155dp"
+                android:background="@drawable/rounded_corners"
+                android:text="@string/message_advertiser"
+                android:textColor="#FFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toEndOf="@+id/ad_description"
+                app:layout_constraintTop_toBottomOf="@+id/ad_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
