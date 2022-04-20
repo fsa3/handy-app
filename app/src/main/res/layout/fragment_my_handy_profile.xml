@@ -54,12 +54,12 @@
             android:id="@+id/edit_rate_myhProfile"
             android:layout_width="226dp"
             android:layout_height="45dp"
-            android:layout_marginTop="364dp"
+            android:layout_marginTop="372dp"
             android:ems="10"
             android:hint="Rate"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.745"
+            app:layout_constraintHorizontal_bias="0.827"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,11 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="376dp"
+            android:layout_marginTop="384dp"
             android:text="Hourly rate:"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintHorizontal_bias="0.125"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,9 +121,9 @@
             android:id="@+id/trade_myhProfileS"
             android:layout_width="226dp"
             android:layout_height="45dp"
-            android:layout_marginTop="316dp"
+            android:layout_marginTop="320dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.745"
+            app:layout_constraintHorizontal_bias="0.772"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
