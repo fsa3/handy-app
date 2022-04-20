@@ -1,10 +1,7 @@
 package is.hi.handy_app.Services;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -15,14 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import is.hi.handy_app.Entities.Ad;
-import is.hi.handy_app.Entities.HandyUser;
-import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 

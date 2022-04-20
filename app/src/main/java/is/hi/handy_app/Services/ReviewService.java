@@ -1,6 +1,5 @@
 package is.hi.handy_app.Services;
 
-import android.app.DownloadManager;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -13,18 +12,14 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Review;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 
 public class ReviewService {
-    private NetworkManager mNetworkManager;
-    private Context mContext;
-    private HandyUser mHandyUser;
+    private final NetworkManager mNetworkManager;
 
     public ReviewService(Context context){
-        mContext = context;
         mNetworkManager = NetworkManager.getInstance(context);
     }
 

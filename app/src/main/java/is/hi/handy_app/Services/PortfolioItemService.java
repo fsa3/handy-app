@@ -1,7 +1,6 @@
 package is.hi.handy_app.Services;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -13,7 +12,6 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.List;
-
 
 import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.Networking.NetworkCallback;

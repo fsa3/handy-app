@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -16,11 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Entities.User;
@@ -35,15 +31,13 @@ public class UserService {
     public static final String USER_TRADE = "logged-in-user-trade";
     public static final String HANDYUSER_LOGGEDIN = "handy-user-logged-in";
 
-    private NetworkManager mNetworkManager;
-    private Context mContext;
-    private SharedPreferences mSharedPreferences;
+    private final NetworkManager mNetworkManager;
+    private final SharedPreferences mSharedPreferences;
 
 
     public UserService(Context context) {
-        mContext = context;
         mNetworkManager = NetworkManager.getInstance(context);
-        mSharedPreferences = mContext.getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS, Context.MODE_PRIVATE);
     }
 
     public void findAllHandyUsers(String name, String trade, NetworkCallback<List<HandyUser>> callback) {

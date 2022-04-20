@@ -6,7 +6,6 @@ import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,11 +18,9 @@ import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 
 public class MessageService {
-    private NetworkManager mNetworkManager;
-    private Context mContext;
+    private final NetworkManager mNetworkManager;
 
     public MessageService(Context context) {
-        mContext = context;
         mNetworkManager = NetworkManager.getInstance(context);
     }
 
