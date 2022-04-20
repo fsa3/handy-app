@@ -42,8 +42,7 @@ public class AdsAdapter extends ArrayAdapter<Ad> {
 
         final Ad i = items.get(position);
         if (i != null) {
-            v = vi.inflate(R.layout.cardview_advertisement, null); //custom xml for desired view
-            //do what ever you need to
+            v = vi.inflate(R.layout.cardview_advertisement, null);
             ((TextView)v.findViewById(R.id.adcard_title)).setText(i.getTitle());
             byte[] decodedImage = Base64.getDecoder().decode(i.getStringImage());
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
@@ -59,7 +58,6 @@ public class AdsAdapter extends ArrayAdapter<Ad> {
     public static void setDynamicHeight(GridView gridView) {
         ListAdapter gridViewAdapter = gridView.getAdapter();
         if (gridViewAdapter == null) {
-            // pre-condition
             return;
         }
 
@@ -68,7 +66,7 @@ public class AdsAdapter extends ArrayAdapter<Ad> {
 
         View listItem = gridViewAdapter.getView(0, null, gridView);
         listItem.measure(0, 0);
-        totalHeight = listItem.getMeasuredHeight()+45;
+        totalHeight = listItem.getMeasuredHeight()+50;
 
         if( items > 2 ){
             int rows = (int) Math.ceil(items/2.0);
