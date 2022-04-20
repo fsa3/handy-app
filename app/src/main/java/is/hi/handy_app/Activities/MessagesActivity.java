@@ -1,24 +1,24 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Activities;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-import is.hi.handy_app.Entities.Message;
 import is.hi.handy_app.Adapters.MessageAdapter;
+import is.hi.handy_app.Entities.Message;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.MessageService;
 import is.hi.handy_app.Services.UserService;
 
@@ -63,31 +63,28 @@ public class MessagesActivity extends AppCompatActivity {
 
         mMessagesHeader.setText(getIntent().getStringExtra(EXTRA_USER_FROM_NAME));
 
-        mSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String content = mMessageField.getText().toString().trim();
+        mSendButton.setOnClickListener(view -> {
+            String content = mMessageField.getText().toString().trim();
 
-                if(content.isEmpty()){
-                    mMessageField.setError("Please enter a message");
-                    mMessageField.requestFocus();
-                    return;
+            if(content.isEmpty()){
+                mMessageField.setError("Please enter a message");
+                mMessageField.requestFocus();
+                return;
+            }
+
+            mMessageService.sendMessage(mUserIdSent, mUserIdReceived, content, new NetworkCallback<Message>() {
+                @Override
+                public void onSuccess(Message result) {
+                    getMessages();
+                    mMessageField.setText("");
                 }
 
-                mMessageService.sendMessage(mUserIdSent, mUserIdReceived, content, new NetworkCallback<Message>() {
-                    @Override
-                    public void onSuccess(Message result) {
-                        getMessages();
-                        mMessageField.setText("");
-                    }
-
-                    @Override
-                    public void onaFailure(String errorString) {
-                        Snackbar snackbar = Snackbar.make(mMessagesRecyclerView, "Failed to send message", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                });
-            }
+                @Override
+                public void onaFailure(String errorString) {
+                    Snackbar snackbar = Snackbar.make(mMessagesRecyclerView, "Failed to send message", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            });
         });
 
         getMessages();

@@ -1,4 +1,4 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Fragments;
 
 
 import android.content.Context;
@@ -25,10 +25,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import is.hi.handy_app.Activities.HandyProfileActivity;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Adapters.HandyUserAdapter;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.UserService;
 
 public class HandymenFragment extends Fragment {
@@ -61,10 +64,10 @@ public class HandymenFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_handymen, container, false);
         mHandymenContainer = view.findViewById(R.id.handymen_container);
-        mListView = (ListView) view.findViewById(R.id.handymen_listview);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.handymen_progressbar);
-        mErrorText = (TextView) view.findViewById(R.id.handymen_error);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.handymen_swipe);
+        mListView = view.findViewById(R.id.handymen_listview);
+        mProgressBar = view.findViewById(R.id.handymen_progressbar);
+        mErrorText = view.findViewById(R.id.handymen_error);
+        mSwipeRefreshLayout = view.findViewById(R.id.handymen_swipe);
         mTradeSpinner = view.findViewById(R.id.handymen_trade_spinner);
         List<String> trades = Stream.of(Trade.values())
                     .map(Trade::name)
@@ -78,12 +81,9 @@ public class HandymenFragment extends Fragment {
 
         getHandymen();
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mNameSearch = null;
-                getHandymen();
-            }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mNameSearch = null;
+            getHandymen();
         });
 
         ((MainActivity) mContext).setSearch("Search for a Handyman", new SearchView.OnQueryTextListener() {
@@ -134,12 +134,9 @@ public class HandymenFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mHandymenContainer.setVisibility(View.VISIBLE);
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = HandyProfileActivity.newIntent(mContext, mHandyUsers.get(i));
-                        startActivity(intent);
-                    }
+                mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                    Intent intent = HandyProfileActivity.newIntent(mContext, mHandyUsers.get(i));
+                    startActivity(intent);
                 });
                 if (mHandyUsers.size() == 0) {
                     mErrorText.setText(getResources().getString(R.string.no_results));

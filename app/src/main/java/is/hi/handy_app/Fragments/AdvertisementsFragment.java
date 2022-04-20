@@ -1,4 +1,4 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,9 +25,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-import is.hi.handy_app.Entities.Ad;
+import is.hi.handy_app.Activities.AdActivity;
+import is.hi.handy_app.Activities.CreateAdActivity;
 import is.hi.handy_app.Adapters.AdsAdapter;
+import is.hi.handy_app.Entities.Ad;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.UserService;
 
@@ -57,10 +60,10 @@ public class AdvertisementsFragment extends Fragment {
         ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_advertisements);
 
         View view =  inflater.inflate(R.layout.fragment_advertisements, container, false);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.ads_progressbar);
-        mGridView = (GridView) view.findViewById(R.id.ads_gridview);
-        mErrorText = (TextView) view.findViewById(R.id.ads_error);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.ads_swipe);
+        mProgressBar = view.findViewById(R.id.ads_progressbar);
+        mGridView = view.findViewById(R.id.ads_gridview);
+        mErrorText = view.findViewById(R.id.ads_error);
+        mSwipeRefreshLayout = view.findViewById(R.id.ads_swipe);
         mCreateAdButton = view.findViewById(R.id.ads_create_new);
 
         if (!mUserService.isUserLoggedIn()) {
@@ -69,19 +72,9 @@ public class AdvertisementsFragment extends Fragment {
 
         getAds(null);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getAds(null);
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> getAds(null));
 
-        mCreateAdButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(mContext, CreateAdActivity.class), NEW_AD_REQUEST_CODE);
-            }
-        });
+        mCreateAdButton.setOnClickListener(view1 -> startActivityForResult(new Intent(mContext, CreateAdActivity.class), NEW_AD_REQUEST_CODE));
 
         ((MainActivity) mContext).setSearch("Search by Ad name or description", new SearchView.OnQueryTextListener() {
             @Override
@@ -122,7 +115,7 @@ public class AdvertisementsFragment extends Fragment {
             } else if (data.getStringExtra(AdActivity.SHOW_TRADE) != null) {
                 ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_handymen);
                 Fragment handymenFragment = new HandymenFragment(data.getStringExtra(AdActivity.SHOW_TRADE));
-                FragmentManager fragmentManager = AdvertisementsFragment.this.getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = AdvertisementsFragment.this.requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, handymenFragment)
                         .addToBackStack(null)
@@ -143,12 +136,9 @@ public class AdvertisementsFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mGridView.setVisibility(View.VISIBLE);
-                mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
-                        startActivityForResult(intent, OPEN_AD_REQUEST_CODE);
-                    }
+                mGridView.setOnItemClickListener((adapterView, view, i, l) -> {
+                    Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
+                    startActivityForResult(intent, OPEN_AD_REQUEST_CODE);
                 });
                 if (mAds.size() == 0) {
                     mErrorText.setText(getResources().getString(R.string.no_results));

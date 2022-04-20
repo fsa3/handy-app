@@ -1,26 +1,27 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.List;
 
-import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.Activities.MessagesActivity;
 import is.hi.handy_app.Adapters.MessageUserAdapter;
+import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.MessageService;
 import is.hi.handy_app.Services.UserService;
 
@@ -62,12 +63,7 @@ public class MyMessagesFragment extends Fragment {
         
         getMessageUsers();
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getMessageUsers();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(this::getMessageUsers);
         
         return view;
     }
@@ -84,12 +80,9 @@ public class MyMessagesFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mUsersContainer.setVisibility(View.VISIBLE);
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = MessagesActivity.newIntent(mContext, mMessageUsers.get(i).getID(), mMessageUsers.get(i).getName());
-                        startActivity(intent);
-                    }
+                mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                    Intent intent = MessagesActivity.newIntent(mContext, mMessageUsers.get(i).getID(), mMessageUsers.get(i).getName());
+                    startActivity(intent);
                 });
                 if (mMessageUsers.size() == 0) {
                     mErrorText.setText(R.string.no_messages);

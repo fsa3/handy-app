@@ -1,4 +1,4 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import is.hi.handy_app.Entities.Review;
 import is.hi.handy_app.Adapters.PortfolioItemAdapter;
 import is.hi.handy_app.Adapters.ReviewAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.PortfolioItemService;
 import is.hi.handy_app.Services.ReviewService;
 import is.hi.handy_app.Services.UserService;
@@ -87,11 +88,11 @@ public class HandyProfileActivity extends AppCompatActivity {
 
         double result = mHandyUser.getHourlyRate();
         String finalResult = Double.valueOf(result).toString();
-        mHandyHourlyRate.setText(new StringBuilder().append(getString(R.string.hourly_rate)).append(finalResult).append(" kr.").toString());
+        mHandyHourlyRate.setText(String.format(getResources().getString(R.string.hourly_rate), finalResult));
 
         double resultRating = mHandyUser.getAverageRating();
         String finalResultRating = Double.valueOf(resultRating).toString();
-        mAverageRating.setText(new StringBuilder().append(getString(R.string.av_rating)).append(finalResultRating).toString());
+        mAverageRating.setText(String.format(getResources().getString(R.string.av_rating), finalResultRating));
 
         mHandyInfo.setText(mHandyUser.getInfo());
 

@@ -1,4 +1,4 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +18,7 @@ import java.util.Base64;
 
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.UserService;
 
@@ -82,42 +80,36 @@ public class AdActivity extends AppCompatActivity {
             mAdMessageDeleteButton.setText(R.string.sign_in_to_message_advertiser);
         }
 
-        mAdTrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent data = new Intent();
-                data.putExtra(SHOW_TRADE, mAd.getTrade().toString());
-                setResult(RESULT_OK, data);
-                finish();
-            }
+        mAdTrade.setOnClickListener(view -> {
+            Intent data = new Intent();
+            data.putExtra(SHOW_TRADE, mAd.getTrade().toString());
+            setResult(RESULT_OK, data);
+            finish();
         });
 
         if (mUserService.getLoggedInUserId() == mAd.getUser().getID()) {
             mAdMessageDeleteButton.setText(R.string.delete_ad);
         }
-        mAdMessageDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mUserService.getLoggedInUserId() == mAd.getUser().getID()) {
-                    mAdService.deleteAd(mAd, new NetworkCallback<Ad>() {
-                        @Override
-                        public void onSuccess(Ad result) {
-                            Intent data = new Intent();
-                            data.putExtra(AD_SUCCESSFULLY_DELETED_EXTRA, true);
-                            setResult(RESULT_OK, data);
-                            finish();
-                        }
+        mAdMessageDeleteButton.setOnClickListener(view -> {
+            if (mUserService.getLoggedInUserId() == mAd.getUser().getID()) {
+                mAdService.deleteAd(mAd, new NetworkCallback<Ad>() {
+                    @Override
+                    public void onSuccess(Ad result) {
+                        Intent data = new Intent();
+                        data.putExtra(AD_SUCCESSFULLY_DELETED_EXTRA, true);
+                        setResult(RESULT_OK, data);
+                        finish();
+                    }
 
-                        @Override
-                        public void onaFailure(String errorString) {
-                            Toast.makeText(AdActivity.this, errorString, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                else {
-                    Intent i = MessagesActivity.newIntent(AdActivity.this, mAd.getUser().getID(), mAd.getUser().getName());
-                    startActivity(i);
-                }
+                    @Override
+                    public void onaFailure(String errorString) {
+                        Toast.makeText(AdActivity.this, errorString, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else {
+                Intent i = MessagesActivity.newIntent(AdActivity.this, mAd.getUser().getID(), mAd.getUser().getName());
+                startActivity(i);
             }
         });
     }

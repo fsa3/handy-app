@@ -1,19 +1,19 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Activities;
 
 import static is.hi.handy_app.Adapters.HandyUserAdapter.round;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.ReviewService;
 
 
@@ -47,45 +47,12 @@ public class ReviewActivity extends AppCompatActivity {
         mRatingBar = findViewById(R.id.handy_rating_bar);
         mCurrentRatingTextView = findViewById(R.id.handy_current_average_rating);
 
-        mGiveUserRev.setText("Give " + mHandyUser.getName() + " a review!");
+        mGiveUserRev.setText(String.format(getResources().getString(R.string.give_user_a_review), mHandyUser.getName()));
         mCurrentRatingTextView.setText(String.valueOf(round(mHandyUser.getAverageRating(), 1)));
 
-        mReviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String result = mReviewInput.getText().toString();
-                //mReviewService.saveReview();
-            }
+        mReviewButton.setOnClickListener(view -> {
+            String result = mReviewInput.getText().toString();
+            //mReviewService.saveReview();
         });
-
-
-
-
     }
-/*
-    private void displayItems(){
-
-
-        long id = mHandyUser.getID();
-        mReviewService.getMyReviews(id, new NetworkCallback<List<Review>>() {
-            @Override
-            public void onSuccess(List<Review> result) {
-                mReviewList = (ArrayList) result;
-                mRecyclerView = findViewById(R.id.recycler_reviews);
-                mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(ReviewActivity.this));
-                mReviewAdapter = new ReviewAdapter(ReviewActivity.this,mReviewList, false);
-                mRecyclerView.setAdapter(mReviewAdapter);
-
-
-            }
-
-            @Override
-            public void onaFailure(String errorString) {
-                Toast.makeText(ReviewActivity.this, errorString, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
- */
 }

@@ -1,13 +1,7 @@
-package is.hi.handy_app;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+package is.hi.handy_app.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,40 +9,35 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import is.hi.handy_app.Entities.Ad;
-import is.hi.handy_app.Entities.Trade;
-import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.Networking.NetworkCallback;
-import is.hi.handy_app.Services.AdService;
+import is.hi.handy_app.R;
+import is.hi.handy_app.Services.PortfolioItemService;
 
-public class CreateAdActivity extends AppCompatActivity {
+public class CreatePortfolioItemActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     public static final int CAMERA_PERMISSION_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
 
-    public static String AD_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.ad_successfully_posted";
+    public static String PORTFOLIO_ITEM_SUCCESSFULLY_POSTED_EXTRA = "is.hi.handy_app.portfolio_item_successfully_posted";
 
-    AdService mAdService;
+    PortfolioItemService mPortfolioItemService;
 
     TextView mTitleTextView;
-    Spinner mTradeSpinner;
     TextView mLocationTextView;
     TextView mDescriptionTextView;
     ImageView mImageView;
@@ -59,38 +48,23 @@ public class CreateAdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_ad_activity);
+        setContentView(R.layout.activity_create_portfolio_item);
 
-        mAdService = new AdService(this);
+        mPortfolioItemService = new PortfolioItemService(this);
 
-        mTitleTextView = findViewById(R.id.createAd_title);
-        mTradeSpinner = findViewById(R.id.createAd_trade_spinner);
-        mLocationTextView = findViewById(R.id.createAd_location);
-        mDescriptionTextView = findViewById(R.id.createAd_description);
-        mImageView = findViewById(R.id.createAd_image);
-        mPostButton = findViewById(R.id.createAd_post);
+        mTitleTextView = findViewById(R.id.createPortfolioItem_title);
+        mLocationTextView = findViewById(R.id.createPortfolioItem_location);
+        mDescriptionTextView = findViewById(R.id.createPortfolioItem_description);
+        mImageView = findViewById(R.id.createPortfolioItem_image);
+        mPostButton = findViewById(R.id.createPortfolioItem_post);
 
-        List<String> trades = Stream.of(Trade.values())
-                .map(Trade::name)
-                .collect(Collectors.toList());
-        mTradeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, trades));
+        mImageView.setOnClickListener(view -> selectImage());
 
-        mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectImage();
-            }
-        });
+        mPostButton.setOnClickListener(view -> postPortfolioItem());
 
-        mPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postAd();
-            }
-        });
     }
 
-    private void postAd() {
+    private void postPortfolioItem() {
 
         byte[] imageInBytes = {};
         if (mImageView.getDrawable() != null) {
@@ -100,24 +74,23 @@ public class CreateAdActivity extends AppCompatActivity {
             imageInBytes = baos.toByteArray();
         }
 
-        Ad ad = new Ad();
-        ad.setTitle(mTitleTextView.getText().toString());
-        ad.setTrade(Trade.valueOf(mTradeSpinner.getSelectedItem().toString()));
-        ad.setLocation(mLocationTextView.getText().toString());
-        ad.setDescription(mDescriptionTextView.getText().toString());
+        PortfolioItem item = new PortfolioItem();
+        item.setTitle(mTitleTextView.getText().toString());
+        item.setLocation(mLocationTextView.getText().toString());
+        item.setDescription(mDescriptionTextView.getText().toString());
 
-        mAdService.saveAd(ad, imageInBytes, new NetworkCallback<Ad>() {
+        mPortfolioItemService.savePortfolioItem(item, imageInBytes, new NetworkCallback<PortfolioItem>() {
             @Override
-            public void onSuccess(Ad result) {
+            public void onSuccess(PortfolioItem result) {
                 Intent data = new Intent();
-                data.putExtra(AD_SUCCESSFULLY_POSTED_EXTRA, true);
+                data.putExtra(PORTFOLIO_ITEM_SUCCESSFULLY_POSTED_EXTRA, true);
                 setResult(RESULT_OK, data);
                 finish();
             }
 
             @Override
             public void onaFailure(String errorString) {
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.createAd_container),"Posting failed, error: " + errorString,Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.createPortfolioItem_container),"Posting failed, error: " + errorString,Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         });
@@ -125,23 +98,20 @@ public class CreateAdActivity extends AppCompatActivity {
 
     private void selectImage() {
         CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        AlertDialog.Builder bulder = new AlertDialog.Builder(CreateAdActivity.this);
+        AlertDialog.Builder bulder = new AlertDialog.Builder(CreatePortfolioItemActivity.this);
         bulder.setTitle("Add Photo!");
-        bulder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (i == 0) {
-                    askCameraPermission();
-                }
-                else if (i == 1) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, PICK_IMAGE_REQUEST);
-                }
-                else if (i == 2) {
-                    dialogInterface.dismiss();
-                }
+        bulder.setItems(options, (dialogInterface, i) -> {
+            if (i == 0) {
+                askCameraPermission();
+            }
+            else if (i == 1) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            }
+            else if (i == 2) {
+                dialogInterface.dismiss();
             }
         });
         bulder.show();

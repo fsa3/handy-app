@@ -1,4 +1,4 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +21,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import org.w3c.dom.Text;
-
+import is.hi.handy_app.Activities.RegisterHandyUserActivity;
+import is.hi.handy_app.Activities.RegisterUserActivity;
 import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.UserService;
 
 public class LoginFragment extends Fragment {
@@ -56,7 +57,7 @@ public class LoginFragment extends Fragment {
 
         mView = view;
 
-        mCreateAccLink = (TextView) view.findViewById(R.id.noAccLink);
+        mCreateAccLink = view.findViewById(R.id.noAccLink);
 
         mEmailText = view.findViewById(R.id.email);
         mPasswordText = view.findViewById(R.id.password);
@@ -64,45 +65,37 @@ public class LoginFragment extends Fragment {
         mProgressBar = view.findViewById(R.id.loading);
         mLoginMessage = view.findViewById(R.id.login_message);
         
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mProgressBar.setVisibility(View.VISIBLE);
-                mLoginMessage.setVisibility(View.GONE);
-                mUserService.login(mEmailText.getText().toString(), mPasswordText.getText().toString(), new NetworkCallback<User>() {
-                    @Override
-                    public void onSuccess(User result) {
-                        mProgressBar.setVisibility(View.GONE);
-                        ((MainActivity) mContext).resetMenu();
+        mLoginButton.setOnClickListener(view1 -> {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mLoginMessage.setVisibility(View.GONE);
+            mUserService.login(mEmailText.getText().toString(), mPasswordText.getText().toString(), new NetworkCallback<User>() {
+                @Override
+                public void onSuccess(User result) {
+                    mProgressBar.setVisibility(View.GONE);
+                    ((MainActivity) mContext).resetMenu();
 
-                        Fragment handymenFragment = new HandymenFragment();
-                        FragmentManager fragmentManager = LoginFragment.this.getActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, handymenFragment)
-                                .addToBackStack(null)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .commit();
+                    Fragment handymenFragment = new HandymenFragment();
+                    FragmentManager fragmentManager = LoginFragment.this.requireActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, handymenFragment)
+                            .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
 
-                        Snackbar snackbar = Snackbar.make(view, "Signed in as " + result.getName(), Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
+                    Snackbar snackbar = Snackbar.make(view1, "Signed in as " + result.getName(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
 
-                    @Override
-                    public void onaFailure(String errorString) {
-                        mProgressBar.setVisibility(View.GONE);
-                        mLoginMessage.setText(getResources().getString(R.string.login_failed));
-                        mLoginMessage.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
+                @Override
+                public void onaFailure(String errorString) {
+                    mProgressBar.setVisibility(View.GONE);
+                    mLoginMessage.setText(getResources().getString(R.string.login_failed));
+                    mLoginMessage.setVisibility(View.VISIBLE);
+                }
+            });
         });
 
-        mCreateAccLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(mContext, RegisterUserActivity.class), CREATE_ACCOUNT_REQUEST_CODE);
-            }
-        });
+        mCreateAccLink.setOnClickListener(view12 -> startActivityForResult(new Intent(mContext, RegisterUserActivity.class), CREATE_ACCOUNT_REQUEST_CODE));
 
         return view;
     }

@@ -29,7 +29,8 @@
     <string name="sign_in_to_message_advertiser">Sign in to message advertiser</string>
     <string name="sing_in_to_message">Sign in to message</string>
     <string name="sign_in_to_rate">Sign in to rate</string>
-    <string name="hourly_rate">\"Hourly Rate: \"</string>
-    <string name="av_rating">\"Av. Rating: \"</string>
+    <string name="hourly_rate">"Hourly Rate: %1$s kr."</string>
+    <string name="av_rating">"Av. Rating: %1$s"</string>
+    <string name="give_user_a_review">"Give %1$s a review!"</string>
 
 </resources>

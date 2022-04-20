@@ -1,6 +1,13 @@
 package is.hi.handy_app;
 
-import androidx.annotation.IdRes;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,23 +16,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
 import com.google.android.material.navigation.NavigationView;
-
-import is.hi.handy_app.Services.UserService;
-
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.messaging.RemoteMessage;
-import com.pusher.pushnotifications.PushNotificationReceivedListener;
 import com.pusher.pushnotifications.PushNotifications;
-import com.pusher.pushnotifications.reporting.FCMMessageReceiver;
+
+import is.hi.handy_app.Fragments.AdvertisementsFragment;
+import is.hi.handy_app.Fragments.HandymenFragment;
+import is.hi.handy_app.Fragments.LoginFragment;
+import is.hi.handy_app.Fragments.MyHandyProfileFragment;
+import is.hi.handy_app.Fragments.MyMessagesFragment;
+import is.hi.handy_app.Fragments.MyProfileFragment;
+import is.hi.handy_app.Services.UserService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SHARED_PREFS = "handy-shared-prefs";
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setCheckedItem(R.id.nav_handymen);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

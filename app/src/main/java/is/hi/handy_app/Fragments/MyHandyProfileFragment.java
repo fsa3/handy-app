@@ -1,22 +1,13 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,29 +16,39 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import is.hi.handy_app.Activities.AdActivity;
+import is.hi.handy_app.Activities.CreatePortfolioItemActivity;
+import is.hi.handy_app.Adapters.AdsAdapter;
+import is.hi.handy_app.Adapters.PortfolioItemAdapter;
+import is.hi.handy_app.Adapters.ReviewAdapter;
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.Entities.Review;
 import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Entities.User;
-import is.hi.handy_app.Adapters.AdsAdapter;
-import is.hi.handy_app.Adapters.PortfolioItemAdapter;
-import is.hi.handy_app.Adapters.ReviewAdapter;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.PortfolioItemService;
 import is.hi.handy_app.Services.ReviewService;
 import is.hi.handy_app.Services.UserService;
 
 public class MyHandyProfileFragment extends Fragment {
-    public static int NEW_PORTFOLIOITEM_REQUEST_CODE = 301;
     public static int OPEN_PORTFOLIOITEM_REQUEST_CODE = 302;
 
     private Context mContext;
@@ -74,7 +75,7 @@ public class MyHandyProfileFragment extends Fragment {
     private Button mDeleteAccountButton;
     private Button mCreatePortfolioItemButton;
 
-    private List<String> mTrades = Stream.of(Trade.values())
+    private final List<String> mTrades = Stream.of(Trade.values())
             .map(Trade::name)
             .collect(Collectors.toList());
 
@@ -133,80 +134,67 @@ public class MyHandyProfileFragment extends Fragment {
 
         getWrittenReviews(userId);
 
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSaveProgressBar.setVisibility(View.VISIBLE);
-                mUser.setName(mNameInput.getText().toString());
-                mUser.setEmail(mEmailInput.getText().toString());
-                mUser.setInfo(mDescriptionInput.getText().toString());
-                mUser.setTrade(Trade.valueOf(mTradeInput.getSelectedItem().toString()));
-                mUser.setHourlyRate(Double.parseDouble(mHourlyRateInput.getText().toString()));
+        mSaveButton.setOnClickListener(v -> {
+            mSaveProgressBar.setVisibility(View.VISIBLE);
+            mUser.setName(mNameInput.getText().toString());
+            mUser.setEmail(mEmailInput.getText().toString());
+            mUser.setInfo(mDescriptionInput.getText().toString());
+            mUser.setTrade(Trade.valueOf(mTradeInput.getSelectedItem().toString()));
+            mUser.setHourlyRate(Double.parseDouble(mHourlyRateInput.getText().toString()));
 
-                mUserService.saveHandyUser(mUser, true, new NetworkCallback<HandyUser>() {
-                    @Override
-                    public void onSuccess(HandyUser result) {
-                        mUser = result;
-                        setHandyUserInfo();
-                        Snackbar snackbar = Snackbar.make(view, "Profile updated", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                        mUserService.login(mUser.getEmail(), mUser.getPassword(), new NetworkCallback<User>() {
-                            @Override
-                            public void onSuccess(User result) {
-                                ((MainActivity) mContext).resetMenu();
-                                mSaveProgressBar.setVisibility(View.GONE);
-                            }
+            mUserService.saveHandyUser(mUser, true, new NetworkCallback<HandyUser>() {
+                @Override
+                public void onSuccess(HandyUser result) {
+                    mUser = result;
+                    setHandyUserInfo();
+                    Snackbar snackbar = Snackbar.make(view, "Profile updated", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    mUserService.login(mUser.getEmail(), mUser.getPassword(), new NetworkCallback<User>() {
+                        @Override
+                        public void onSuccess(User result) {
+                            ((MainActivity) mContext).resetMenu();
+                            mSaveProgressBar.setVisibility(View.GONE);
+                        }
 
-                            @Override
-                            public void onaFailure(String errorString) {
+                        @Override
+                        public void onaFailure(String errorString) {
 
-                            }
-                        });
-                    }
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onaFailure(String errorString) {
+                @Override
+                public void onaFailure(String errorString) {
 
-                    }
-                });
-            }
+                }
+            });
         });
 
-        mCreatePortfolioItemButton.setOnClickListener(new View.OnClickListener() {
+        mCreatePortfolioItemButton.setOnClickListener(view1 -> startActivityForResult(new Intent(mContext, CreatePortfolioItemActivity.class), OPEN_PORTFOLIOITEM_REQUEST_CODE));
+
+        mDeleteAccountButton.setOnClickListener(v -> mUserService.deleteUser(mUser, new NetworkCallback<User>() {
             @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(mContext, CreatePortfolioItemActivity.class), OPEN_PORTFOLIOITEM_REQUEST_CODE);
-            }
-        });
+            public void onSuccess(User result) {
+                ((MainActivity) mContext).resetMenu();
 
-        mDeleteAccountButton.setOnClickListener(new View.OnClickListener() {
+                Fragment handymenFragment = new HandymenFragment();
+                FragmentManager fragmentManager = MyHandyProfileFragment.this.requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, handymenFragment)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+
+                Snackbar snackbar = Snackbar.make(view, "Account successfully deleted", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+
             @Override
-            public void onClick(View v) {
-                mUserService.deleteUser(mUser, new NetworkCallback<User>() {
-                    @Override
-                    public void onSuccess(User result) {
-                        ((MainActivity) mContext).resetMenu();
-
-                        Fragment handymenFragment = new HandymenFragment();
-                        FragmentManager fragmentManager = MyHandyProfileFragment.this.getActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, handymenFragment)
-                                .addToBackStack(null)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .commit();
-
-                        Snackbar snackbar = Snackbar.make(view, "Account successfully deleted", Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-
-                    @Override
-                    public void onaFailure(String errorString) {
-                        Snackbar snackbar = Snackbar.make(view, "Failed to delete account " + errorString, Snackbar.LENGTH_LONG);
-                        snackbar.show();
-                    }
-                });
+            public void onaFailure(String errorString) {
+                Snackbar snackbar = Snackbar.make(view, "Failed to delete account " + errorString, Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
-        });
+        }));
 
         return view;
     }
@@ -274,12 +262,9 @@ public class MyHandyProfileFragment extends Fragment {
         AdsAdapter adapter = new AdsAdapter(mContext, mAds);
         mActiveAds.setAdapter(adapter);
         AdsAdapter.setDynamicHeight(mActiveAds);
-        mActiveAds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
-                startActivityForResult(intent, AdvertisementsFragment.OPEN_AD_REQUEST_CODE);
-            }
+        mActiveAds.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = AdActivity.newIntent(mContext, mAds.get(i));
+            startActivityForResult(intent, AdvertisementsFragment.OPEN_AD_REQUEST_CODE);
         });
     }
 
@@ -307,7 +292,7 @@ public class MyHandyProfileFragment extends Fragment {
             } else if (data.getStringExtra(AdActivity.SHOW_TRADE) != null) {
                 ((MainActivity) mContext).mNavigationView.setCheckedItem(R.id.nav_handymen);
                 Fragment handymenFragment = new HandymenFragment(data.getStringExtra(AdActivity.SHOW_TRADE));
-                FragmentManager fragmentManager = MyHandyProfileFragment.this.getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = MyHandyProfileFragment.this.requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, handymenFragment)
                         .addToBackStack(null)

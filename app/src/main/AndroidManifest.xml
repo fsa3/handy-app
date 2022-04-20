@@ -22,28 +22,28 @@
         android:theme="@style/Theme.Handyapp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HandyProfileActivity"
+            android:name=".Activities.HandyProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatePortfolioItemActivity"
+            android:name=".Activities.CreatePortfolioItemActivity"
             android:exported="false" />
         <activity
-            android:name=".ReviewActivity"
+            android:name=".Activities.ReviewActivity"
             android:exported="false" />
         <activity
-            android:name=".MessagesActivity"
+            android:name=".Activities.MessagesActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateAdActivity"
+            android:name=".Activities.CreateAdActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterHandyUserActivity"
+            android:name=".Activities.RegisterHandyUserActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterUserActivity"
+            android:name=".Activities.RegisterUserActivity"
             android:exported="false" />
         <activity
-            android:name=".AdActivity"
+            android:name=".Activities.AdActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,23 +1,24 @@
-package is.hi.handy_app;
+package is.hi.handy_app.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Trade;
+import is.hi.handy_app.MainActivity;
 import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.R;
 import is.hi.handy_app.Services.UserService;
 
 public class RegisterHandyUserActivity extends AppCompatActivity implements View.OnClickListener{
@@ -38,23 +39,24 @@ public class RegisterHandyUserActivity extends AppCompatActivity implements View
 
         mUserService = new UserService(this);
 
-        mBanner = (TextView) findViewById(R.id.bannerDescription);
+        mBanner = findViewById(R.id.bannerDescription);
         mBanner.setOnClickListener(this);
 
-        mRegisterUser = (Button) findViewById(R.id.registerUser);
+        mRegisterUser = findViewById(R.id.registerUser);
         mRegisterUser.setOnClickListener(this);
 
-        mNameText = (EditText) findViewById(R.id.fullName);
-        mEmailText = (EditText) findViewById(R.id.email);
-        mPasswordText = (EditText) findViewById(R.id.password);
+        mNameText = findViewById(R.id.fullName);
+        mEmailText = findViewById(R.id.email);
+        mPasswordText = findViewById(R.id.password);
 
-        mSpinner = (Spinner) findViewById(R.id.spinner);
-        mSpinner.setAdapter(new ArrayAdapter<Trade>(this, android.R.layout.simple_spinner_item, Trade.values()));
+        mSpinner = findViewById(R.id.spinner);
+        mSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Trade.values()));
 
-        mProgressBar = (ProgressBar) findViewById(R.id.loading);
+        mProgressBar = findViewById(R.id.loading);
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
