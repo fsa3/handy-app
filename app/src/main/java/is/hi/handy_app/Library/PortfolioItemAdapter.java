@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -19,7 +18,6 @@ import androidx.annotation.RequiresApi;
 import java.util.Base64;
 import java.util.List;
 
-import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.PortfolioItem;
 import is.hi.handy_app.R;
 
@@ -43,7 +41,7 @@ public class PortfolioItemAdapter extends ArrayAdapter<PortfolioItem> {
 
         final PortfolioItem i = items.get(position);
         if (i != null) {
-            v = vi.inflate(R.layout.listitem_review, null);
+            v = vi.inflate(R.layout.listitem_portfolio_item, null);
 
             ((TextView)v.findViewById(R.id.portfolioItem_title)).setText(i.getTitle());
             byte[] decodedImage = Base64.getDecoder().decode(i.getStringImage());
