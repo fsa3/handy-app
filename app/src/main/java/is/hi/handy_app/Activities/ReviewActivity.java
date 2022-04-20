@@ -9,12 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Timestamp;
+
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Entities.Review;
+import is.hi.handy_app.Entities.User;
+import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.R;
 import is.hi.handy_app.Services.ReviewService;
+import is.hi.handy_app.Services.UserService;
 
 
 public class ReviewActivity extends AppCompatActivity {
@@ -26,6 +33,8 @@ public class ReviewActivity extends AppCompatActivity {
     EditText mReviewInput;
     RatingBar mRatingBar;
     TextView mCurrentRatingTextView;
+    UserService mUserService;
+
 
     public static Intent newIntent(Context packageContext, HandyUser handyUser) {
         Intent i = new Intent(packageContext, ReviewActivity.class);
@@ -39,6 +48,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review);
 
+        mUserService = new UserService(this);
         mReviewService = new ReviewService(this);
         mHandyUser = (HandyUser)getIntent().getSerializableExtra(EXTRA_HANDY);
         mReviewButton = findViewById(R.id.review_button);
@@ -51,8 +61,21 @@ public class ReviewActivity extends AppCompatActivity {
         mCurrentRatingTextView.setText(String.valueOf(round(mHandyUser.getAverageRating(), 1)));
 
         mReviewButton.setOnClickListener(view -> {
+            int rateResult = (int) mRatingBar.getRating();
             String result = mReviewInput.getText().toString();
-            //mReviewService.saveReview();
+
+            mReviewService.saveReview(mUserService.getLoggedInUserId(), mHandyUser.getID(), rateResult, result, new NetworkCallback<Review>() {
+                @Override
+                public void onSuccess(Review result) {
+                    Toast.makeText(ReviewActivity.this," Review received!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onaFailure(String errorString) {
+                    Toast.makeText(ReviewActivity.this, "Review failed!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
         });
     }
 }

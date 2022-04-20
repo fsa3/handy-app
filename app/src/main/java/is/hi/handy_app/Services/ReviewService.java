@@ -12,7 +12,9 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.Review;
+import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Networking.NetworkManager;
 
@@ -57,18 +59,17 @@ public class ReviewService {
         });
     }
 
-    public void saveReview (Review review ,NetworkCallback<Review> callback){
+    public void saveReview (long authorID, Long handyUserID, int rating, String review, NetworkCallback<Review> callback){
         JSONObject body = new JSONObject();
         try {
-            body.put("text", review.getText());
-            body.put("rating",review.getRating());
-            body.put("timeposted",review.getTimePosted());
-            body.put("author",review.getAuthor());
-            body.put("handyman",review.getHandyman());
+            body.put("text", review );
+            body.put("rating",rating);
+            body.put("author", authorID);
+            body.put("handyman",handyUserID);
         }catch (JSONException e){
             e.printStackTrace();
         }
-        mNetworkManager.sendRequestWithBody("createreview", Request.Method.POST, body, new NetworkCallback<String>() {
+        mNetworkManager.sendRequestWithBody("/reviews", Request.Method.POST, body, new NetworkCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
