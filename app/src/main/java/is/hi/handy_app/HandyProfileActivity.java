@@ -103,6 +103,7 @@ public class HandyProfileActivity extends AppCompatActivity {
 
         mButtonReview = findViewById(R.id.write_a_review);
 
+
         mButtonReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,10 +116,13 @@ public class HandyProfileActivity extends AppCompatActivity {
 
         if (mHandyUser.getID() == mUserService.getLoggedInUserId()) {
             mButtonMessage.setEnabled(false);
+            mButtonReview.setEnabled(false);
         }
         else if (!mUserService.isUserLoggedIn()) {
             mButtonMessage.setEnabled(false);
             mButtonMessage.setText(R.string.sing_in_to_message);
+            mButtonReview.setEnabled(false);
+            mButtonReview.setText("Sign in to rate");
         }
 
         mButtonMessage.setOnClickListener(new View.OnClickListener() {

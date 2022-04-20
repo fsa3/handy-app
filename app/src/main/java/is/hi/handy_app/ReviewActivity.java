@@ -1,5 +1,7 @@
 package is.hi.handy_app;
 
+import static is.hi.handy_app.Library.HandyUserAdapter.round;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,15 +29,13 @@ import is.hi.handy_app.Services.ReviewService;
 
 public class ReviewActivity extends AppCompatActivity {
     private static final String EXTRA_HANDY = "is.hi.handy_app.handyuser";
-    RecyclerView mRecyclerView;
-    ArrayList<Review> mReviewList;
-    ReviewAdapter mReviewAdapter;
     ReviewService mReviewService;
     HandyUser mHandyUser;
-    TextView mbanner;
     TextView mGiveUserRev;
     Button mReviewButton;
     EditText mReviewInput;
+    RatingBar mRatingBar;
+    TextView mCurrentRatingTextView;
 
     public static Intent newIntent(Context packageContext, HandyUser handyUser) {
         Intent i = new Intent(packageContext, ReviewActivity.class);
@@ -50,14 +51,14 @@ public class ReviewActivity extends AppCompatActivity {
 
         mReviewService = new ReviewService(this);
         mHandyUser = (HandyUser)getIntent().getSerializableExtra(EXTRA_HANDY);
-        mbanner = findViewById(R.id.Review_Banner);
         mReviewButton = findViewById(R.id.review_button);
         mGiveUserRev = findViewById(R.id.review_about);
         mReviewInput = findViewById(R.id.ed_review);
-        mbanner.setText(mHandyUser.getName() +" Reviews");
-        mGiveUserRev.setText("Give " + mHandyUser.getName() + " a review!");
-        displayItems();
+        mRatingBar = findViewById(R.id.handy_rating_bar);
+        mCurrentRatingTextView = findViewById(R.id.handy_current_average_rating);
 
+        mGiveUserRev.setText("Give " + mHandyUser.getName() + " a review!");
+        mCurrentRatingTextView.setText(String.valueOf(round(mHandyUser.getAverageRating(), 1)));
 
         mReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +72,7 @@ public class ReviewActivity extends AppCompatActivity {
 
 
     }
-
+/*
     private void displayItems(){
 
 
@@ -96,4 +97,5 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
     }
+ */
 }
