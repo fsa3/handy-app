@@ -27,5 +27,6 @@
     <string name="review_banner">reviews !</string>
     <string name="no_messages">No messages found</string>
     <string name="sign_in_to_message_advertiser">Sign in to message advertiser</string>
+    <string name="sing_in_to_message">Sign in to message</string>
 
 </resources>

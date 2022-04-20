@@ -38,11 +38,16 @@ public class HandyUserAdapter extends ArrayAdapter<HandyUser> {
             //do what ever you need to
             ((TextView)v.findViewById(R.id.handylist_text1)).setText(i.getName());
             ((TextView)v.findViewById(R.id.handylist_text2)).setText(i.getTrade().toString());
-            ((TextView)v.findViewById(R.id.handylist_rating)).setText(String.valueOf(i.getAverageRating()));
+            ((TextView)v.findViewById(R.id.handylist_rating)).setText(String.valueOf(round(i.getAverageRating(), 1)));
             ((TextView)v.findViewById(R.id.handylist_rate)).setText(String.valueOf(i.getHourlyRate()));
 
         }
         return v;
+    }
+
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
 }

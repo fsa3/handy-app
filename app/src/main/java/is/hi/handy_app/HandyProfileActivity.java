@@ -18,10 +18,13 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Services.UserService;
 
 
 public class HandyProfileActivity extends AppCompatActivity {
     private static final String EXTRA_HANDYUSER = "is.hi.handy_app.handyuser";
+
+    UserService mUserService;
 
     HandyUser mHandyUser;
     Button mButtonMessage;
@@ -43,6 +46,7 @@ public class HandyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handyprofile);
+        mUserService = new UserService(this);
 
         mHandyUser = (HandyUser) getIntent().getSerializableExtra(EXTRA_HANDYUSER);
 
@@ -96,6 +100,19 @@ public class HandyProfileActivity extends AppCompatActivity {
         });
 
         mButtonMessage = findViewById(R.id.send_message);
+
+        if (!mUserService.isUserLoggedIn()) {
+            mButtonMessage.setEnabled(false);
+            mButtonMessage.setText(R.string.sing_in_to_message);
+        }
+
+        mButtonMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = MessagesActivity.newIntent(HandyProfileActivity.this, mHandyUser.getID(), mHandyUser.getName());
+                startActivity(i);
+            }
+        });
     }
 
     @Override
