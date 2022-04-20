@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -14,10 +15,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import is.hi.handy_app.Entities.HandyUser;
+import is.hi.handy_app.Entities.PortfolioItem;
+import is.hi.handy_app.Entities.Review;
+import is.hi.handy_app.Library.PortfolioItemAdapter;
+import is.hi.handy_app.Library.ReviewAdapter;
+import is.hi.handy_app.Networking.NetworkCallback;
+import is.hi.handy_app.Services.PortfolioItemService;
+import is.hi.handy_app.Services.ReviewService;
 import is.hi.handy_app.Services.UserService;
 
 
@@ -25,17 +37,22 @@ public class HandyProfileActivity extends AppCompatActivity {
     private static final String EXTRA_HANDYUSER = "is.hi.handy_app.handyuser";
 
     UserService mUserService;
+    ReviewService mReviewService;
+    PortfolioItemService mPortfolioItemService;
 
     HandyUser mHandyUser;
+    List<PortfolioItem> mPortfolioItems;
+    List<Review> mReviews;
+
     Button mButtonMessage;
     Button mButtonReview;
-    Button mButtonSubmit;
-    RatingBar mRatingBar;
     TextView mHandyInfo;
     TextView mHandyName;
     TextView mHandyTrade;
     TextView mHandyHourlyRate;
     TextView mAverageRating;
+    ListView mPortfolioItemsList;
+    RecyclerView mReviewsRecyclerView;
 
     public static Intent newIntent(Context packageContext, HandyUser handyUser) {
         Intent i = new Intent(packageContext, HandyProfileActivity.class);
@@ -47,6 +64,8 @@ public class HandyProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handyprofile);
         mUserService = new UserService(this);
+        mReviewService = new ReviewService(this);
+        mPortfolioItemService = new PortfolioItemService(this);
 
         mHandyUser = (HandyUser) getIntent().getSerializableExtra(EXTRA_HANDYUSER);
 
@@ -63,7 +82,8 @@ public class HandyProfileActivity extends AppCompatActivity {
         mHandyHourlyRate = findViewById(R.id.handy_hourly_rate);
         mAverageRating = findViewById(R.id.my_rating);
         mHandyInfo = findViewById(R.id.handy_info);
-        mRatingBar = findViewById(R.id.handy_rating_bar);
+        mPortfolioItemsList = findViewById(R.id.handy_portfolio);
+        mReviewsRecyclerView = findViewById(R.id.handy_reviews);
 
 
         mHandyName.setText(mHandyUser.getName());
@@ -72,22 +92,14 @@ public class HandyProfileActivity extends AppCompatActivity {
         mHandyTrade.setText(resultEnum);
 
         double result = mHandyUser.getHourlyRate();
-        String finalResult = new Double(result).toString();
-        mHandyHourlyRate.setText("My Hourly Rate :" + finalResult);
+        String finalResult = Double.valueOf(result).toString();
+        mHandyHourlyRate.setText("Hourly Rate: " + finalResult + " kr.");
 
         double resultRating = mHandyUser.getAverageRating();
-        String finalResultRating = new Double(resultRating).toString();
-        mAverageRating.setText("My Rating: " + finalResultRating);
+        String finalResultRating = Double.valueOf(resultRating).toString();
+        mAverageRating.setText("Av. Rating: " + finalResultRating);
 
         mHandyInfo.setText(mHandyUser.getInfo());
-
-        mButtonSubmit = findViewById(R.id.submit_button);
-        mButtonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                float ratingNumber = mRatingBar.getRating();
-            }
-        });
 
         mButtonReview = findViewById(R.id.write_a_review);
 
@@ -111,6 +123,40 @@ public class HandyProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = MessagesActivity.newIntent(HandyProfileActivity.this, mHandyUser.getID(), mHandyUser.getName());
                 startActivity(i);
+            }
+        });
+
+        mPortfolioItemService.getUserPortfolioItems(mHandyUser.getID(), new NetworkCallback<List<PortfolioItem>>() {
+            @Override
+            public void onSuccess(List<PortfolioItem> result) {
+                mPortfolioItems = result;
+                if (mPortfolioItems.size() > 0) {
+                    PortfolioItemAdapter adapter = new PortfolioItemAdapter(HandyProfileActivity.this, mPortfolioItems);
+                    mPortfolioItemsList.setAdapter(adapter);
+                    PortfolioItemAdapter.setDynamicHeight(mPortfolioItemsList);
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
+            }
+        });
+
+        mReviewService.getMyReviews(mHandyUser.getID(), new NetworkCallback<List<Review>>() {
+            @Override
+            public void onSuccess(List<Review> result) {
+                mReviews = result;
+                if (mReviews.size() > 0) {
+                    mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(HandyProfileActivity.this));
+                    ReviewAdapter adapter = new ReviewAdapter(HandyProfileActivity.this, mReviews, false);
+                    mReviewsRecyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
             }
         });
     }

@@ -6,168 +6,180 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/handy_name"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp">
+
+            <TextView
+                android:id="@+id/handy_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="sans-serif-black"
+                android:textAlignment="center"
+                android:textSize="43sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/handy_trade"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="handyName" />
+
+            <TextView
+                android:id="@+id/handy_trade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="17dp"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/handy_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_name"
+                tools:text="Trade"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/handy_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_trade" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_info">
+
+                <TextView
+                    android:id="@+id/my_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="my rating: 4.5" />
+
+                <TextView
+                    android:id="@+id/handy_hourly_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="10dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_rating"
+                    tools:text="Hourly rate: 4567.0 kr" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/handy_portfolio_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Portfolio"
+                android:textSize="23sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <ListView
+                android:id="@+id/handy_portfolio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_portfolio_header" />
+
+            <TextView
+                android:id="@+id/handy_reviews_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Reviews"
+                android:textSize="23sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_portfolio" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/handy_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/handy_reviews_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="sans-serif-black"
-        android:textAlignment="center"
-        android:textSize="43sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/handy_trade"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="handyName" />
-
-    <Button
-        android:id="@+id/send_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_corners"
-        android:text="@string/message_user"
-        android:textColor="#FFF"
-        android:textStyle="bold"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/write_a_review"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar" />
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/write_a_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        <Button
+            android:id="@+id/send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:text="@string/message_user"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_corners"
-        android:text="@string/write_review"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/send_message"
-        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar" />
+        <Button
+            android:id="@+id/write_a_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_corners"
+            android:text="@string/write_review"
+            android:layout_marginStart="20dp"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/handy_trade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="167dp"
-        android:layout_marginBottom="17dp"
-        android:gravity="center_vertical"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/handy_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_name"
-        tools:text="Trade"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/handy_hourly_rate"
-        android:layout_width="176dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="202dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_rating"
-        tools:text="Hourly rate:" />
-
-    <TextView
-        android:id="@+id/handy_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="284dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-black"
-        android:rotation="-4"
-        android:text="@string/rate_me"
-        android:textSize="24sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/handy_rating_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_hourly_rate" />
-
-    <RatingBar
-        android:id="@+id/handy_rating_bar"
-        android:layout_width="241dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="85dp"
-        android:numStars="5"
-        android:stepSize=".5"
-        app:layout_constraintBottom_toTopOf="@+id/submit_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_rating"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="70dp"
-        android:text="@string/submit_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_rating_bar" />
-
-    <TextView
-        android:id="@+id/my_rating"
-        android:layout_width="173dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="202dp"
-        android:layout_marginBottom="21dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/handy_hourly_rate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_info"
-        tools:text="my rating" />
-
-    <TextView
-        android:id="@+id/handy_info"
-        android:layout_width="280dp"
-        android:layout_height="192dp"
-
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="57dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/handy_trade" />
-
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

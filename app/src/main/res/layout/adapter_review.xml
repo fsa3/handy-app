@@ -17,21 +17,22 @@
 
         <TextView
             android:id="@+id/review_author"
-            android:layout_width="125dp"
-            android:layout_height="60dp"
-            android:layout_weight="30"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
+            android:padding="5dp"
             android:textAlignment="center"
             android:textColor="@color/black"
+            android:background="@color/purple_700"
             android:textSize="18sp"
             tools:text="Björn Borgar Magnússon" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="70"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/purple_500">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,8 +62,9 @@
             <TextView
                 android:id="@+id/review_input"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:text="A constructive comment"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                tools:text="A very detailed and a long review stating everything there is to know about this handyman"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
