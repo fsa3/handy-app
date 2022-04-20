@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/createAd_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/createAd_container"
     tools:context=".Activities.CreateAdActivity">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Post a new Advertisement"
+        android:text="@string/post_a_new_advertisement"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.436"
@@ -25,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:ems="10"
-        android:hint="Ad title"
+        android:hint="@string/ad_title"
+        android:importantForAutofill="no"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.169"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +38,7 @@
         android:layout_width="120dp"
         android:layout_height="32dp"
         android:layout_marginTop="152dp"
-        android:text="Trade needed:"
+        android:text="@string/trade_needed"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.116"
@@ -60,7 +62,9 @@
         android:layout_height="46dp"
         android:layout_marginTop="204dp"
         android:ems="10"
-        android:hint="Location"
+        android:hint="@string/location"
+        android:importantForAutofill="no"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +76,8 @@
         android:layout_height="63dp"
         android:layout_marginTop="264dp"
         android:ems="10"
-        android:hint="Description"
+        android:hint="@string/description"
+        android:importantForAutofill="no"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.293"
@@ -88,13 +93,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Add an image to your ad"
+            android:text="@string/add_an_image_to_your_ad"
             android:textAlignment="center" />
 
         <ImageView
@@ -103,7 +109,8 @@
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_baseline_add_24" />
+            android:background="@drawable/ic_baseline_add_24"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -112,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="548dp"
-        android:text="Post"
+        android:text="@string/post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/createAd_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".Activities.CreateAdActivity">
 
         <TextView
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="My Profile"
+            android:text="@string/my_profile"
             android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.436"
@@ -27,9 +27,9 @@
             android:id="@+id/name_myProfileTW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="96dp"
-            android:text="Name:"
+            android:text="@string/name_colon"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
@@ -41,8 +41,10 @@
             android:layout_width="226dp"
             android:layout_height="45dp"
             android:layout_marginTop="84dp"
+            android:autofillHints=""
             android:ems="10"
-            android:hint="Name:"
+            android:hint="@string/name"
+            android:inputType="text"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.675"
@@ -55,7 +57,9 @@
             android:layout_height="45dp"
             android:layout_marginTop="128dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.675"
@@ -66,9 +70,9 @@
             android:id="@+id/email_myProfileTW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="140dp"
-            android:text="Email:"
+            android:text="@string/email_colon"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.101"
@@ -80,9 +84,9 @@
             android:id="@+id/About_me_myProfileTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="192dp"
-            android:text="About me:"
+            android:text="@string/about_me_colon"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.115"
@@ -95,8 +99,9 @@
             android:layout_height="85dp"
             android:layout_marginTop="224dp"
             android:ems="10"
-            android:hint="Description"
             android:gravity="start"
+            android:hint="@string/description"
+            android:importantForAutofill="no"
             android:inputType="text|textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.579"
@@ -108,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="312dp"
-            android:text="Save"
+            android:text="@string/save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.123"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,12 +131,12 @@
             android:id="@+id/reviewsTV_myProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="388dp"
-            android:text="Reviews written"
-            android:textSize="18sp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:text="@string/reviews_written"
+            android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -140,9 +145,9 @@
             android:id="@+id/reviews_myProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:divider="@android:color/transparent"
             android:dividerHeight="10sp"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reviewsTV_myProfile" />
@@ -155,17 +160,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="NestedScrolling" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:text="My active ads"
-            android:textSize="18sp"
+            android:layout_marginStart="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:text="@string/my_active_ads"
+            android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reviews_myProfile" />
@@ -182,21 +188,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="NestedScrolling" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/adsTV_myProfile">
 
             <Button
                 android:id="@+id/deleteAcc_myProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete account" />
+                android:text="@string/delete_account" />
 
         </LinearLayout>
 

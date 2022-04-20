@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Post a Portfolio Item"
+        android:text="@string/post_a_portfolio_item"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.436"
@@ -26,12 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:ems="10"
-        android:hint="Portfolio item title"
+        android:hint="@string/portfolio_item_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.169"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:importantForAutofill="no"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/createPortfolioItem_location"
@@ -39,11 +40,13 @@
         android:layout_height="46dp"
         android:layout_marginTop="148dp"
         android:ems="10"
-        android:hint="Location"
+        android:hint="@string/location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/createPortfolioItem_description"
@@ -52,12 +55,13 @@
         android:layout_marginTop="204dp"
         android:ems="10"
         android:gravity="start"
-        android:hint="Description"
+        android:hint="@string/description"
         android:inputType="text|textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,13 +72,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Add an image to your portfolio"
+            android:text="@string/add_an_image_to_your_portfolio"
             android:textAlignment="center" />
 
         <ImageView
@@ -83,7 +88,8 @@
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_baseline_add_24" />
+            android:background="@drawable/ic_baseline_add_24"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -92,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="532dp"
-        android:text="Post"
+        android:text="@string/post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

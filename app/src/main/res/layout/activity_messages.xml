@@ -24,10 +24,10 @@
                 android:id="@+id/messages_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="35sp"
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
-                android:text="Porter Gabrielson" />
+                android:textSize="35sp"
+                tools:text="Porter Gabrielson" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -66,14 +66,14 @@
 
 
         <EditText
-            android:layout_marginStart="16dp"
             android:id="@+id/messages_edit_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
             android:layout_toStartOf="@+id/messages_send_button"
             android:background="@android:color/transparent"
-            android:hint="Enter Message"
+            android:hint="@string/enter_message"
             android:inputType="text"
             android:maxLines="6"
             tools:ignore="Autofill" />
@@ -84,7 +84,7 @@
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:background="?attr/selectableItemBackground"
-            android:text="Send"
+            android:text="@string/send"
             android:textColor="@color/purple_700" />
 
     </RelativeLayout>

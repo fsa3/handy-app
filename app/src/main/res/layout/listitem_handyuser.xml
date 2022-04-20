@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:orientation="horizontal"
     android:padding="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="4"
         android:layout_height="match_parent"
+        android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
@@ -17,7 +19,7 @@
             android:layout_height="wrap_content"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:text="name" />
+            tools:text="name" />
 
         <TextView
             android:id="@+id/handylist_text2"
@@ -25,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="italic"
-            android:text="trade" />
+            tools:text="trade" />
 
     </LinearLayout>
 
@@ -34,19 +36,22 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1.5"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:id="@+id/handylist_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="rating" />
+            tools:text="rating" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="14dp"
-            android:paddingLeft="1dp"
-            android:src="@drawable/ic_baseline_star_rate_24" />
+            android:paddingStart="1dp"
+            android:paddingEnd="0dp"
+            android:src="@drawable/ic_baseline_star_rate_24"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -55,19 +60,22 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1.5"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:id="@+id/handylist_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="rate" />
+            tools:text="rate" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="14dp"
-            android:paddingLeft="1dp"
-            android:src="@drawable/ic_baseline_payments_24" />
+            android:paddingStart="1dp"
+            android:paddingEnd="0dp"
+            android:src="@drawable/ic_baseline_payments_24"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 

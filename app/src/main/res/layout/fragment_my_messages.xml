@@ -15,7 +15,7 @@
             android:id="@+id/myMessages_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Messages"
+            android:text="@string/my_messages"
             android:padding="10dp"
             android:textSize="25sp"
             android:textStyle="bold"/>

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="sans-serif-black"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textAlignment="center"
         android:textSize="60sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:id="@+id/bannerDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Handy"
+        android:text="@string/handy"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="italic"
@@ -40,12 +40,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="text"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bannerDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/bannerDescription"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/email"
@@ -53,12 +54,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullName" />
+        app:layout_constraintTop_toBottomOf="@+id/fullName"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/password"
@@ -66,12 +68,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/registerUser"
@@ -79,7 +82,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="#0ED6B9"
-        android:text="Register User"
+        android:text="@string/register_user"
         android:textColor="#ffffff"
         android:textSize="26sp"
         android:textStyle="bold"

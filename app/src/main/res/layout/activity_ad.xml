@@ -21,6 +21,7 @@
                 android:id="@+id/ad_image"
                 android:layout_width="0dp"
                 android:layout_height="300dp"
+                android:contentDescription="@string/advertisement_image"
                 android:scaleType="centerCrop"
                 android:transitionName="photoToAnimate"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -55,15 +56,17 @@
                 android:id="@+id/ad_location_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ad_trade">
+                app:layout_constraintTop_toBottomOf="@+id/ad_trade"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/location"
                     android:src="@drawable/ic_baseline_location_on_24" />
 
                 <TextView
@@ -78,15 +81,18 @@
                 android:id="@+id/ad_date_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ad_location_container">
+                app:layout_constraintTop_toBottomOf="@+id/ad_location_container"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/date_posted"
+                    android:paddingStart="0dp"
                     android:paddingEnd="1dp"
                     android:src="@drawable/ic_baseline_date_range_24" />
 

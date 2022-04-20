@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:orientation="horizontal"
-    android:padding="10dp"
-    android:baselineAligned="false">
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="4"
         android:layout_height="match_parent"
+        android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
@@ -33,9 +33,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:contentDescription="@string/open_messages"
             android:paddingStart="1dp"
             android:paddingEnd="0dp"
-            android:contentDescription="open messages"
             android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
