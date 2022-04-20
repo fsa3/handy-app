@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,23 +27,29 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 import is.hi.handy_app.Entities.Ad;
+import is.hi.handy_app.Entities.Review;
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Library.AdsAdapter;
+import is.hi.handy_app.Library.ReviewAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
+import is.hi.handy_app.Services.ReviewService;
 import is.hi.handy_app.Services.UserService;
 
 public class MyProfileFragment extends Fragment {
     private Context mContext;
     private User mUser;
     private List<Ad> mAds;
+    private List<Review> mWrittenReviews;
     private UserService mUserService;
     private AdService mAdService;
+    private ReviewService mReviewService;
 
     private EditText mNameInput;
     private EditText mEmailInput;
     private EditText mDescriptionInput;
     private GridView mActiveAds;
+    private RecyclerView mReviewsWrittenList;
 
     private Button mSaveButton;
     private ProgressBar mSaveProgressBar;
@@ -57,6 +65,7 @@ public class MyProfileFragment extends Fragment {
         mContext = MyProfileFragment.this.getActivity();
         mUserService = new UserService(mContext);
         mAdService = new AdService(mContext);
+        mReviewService = new ReviewService(mContext);
     }
 
     @Override
@@ -70,6 +79,7 @@ public class MyProfileFragment extends Fragment {
         mEmailInput = view.findViewById(R.id.edit_email_myProfile);
         mDescriptionInput = view.findViewById(R.id.About_me_myProfile);
         mActiveAds = view.findViewById(R.id.adsTV_myProfile);
+        mReviewsWrittenList = view.findViewById(R.id.reviews_myProfile);
         mSaveButton = view.findViewById(R.id.save_myProfile);
         mSaveProgressBar = view.findViewById(R.id.myprofile_save_progressbar);
         mDeleteAccountButton = view.findViewById(R.id.deleteAcc_myProfile);
@@ -89,6 +99,8 @@ public class MyProfileFragment extends Fragment {
         });
 
         getAds(userId);
+
+        getWrittenReviews(userId);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +190,23 @@ public class MyProfileFragment extends Fragment {
         });
     }
 
+    private void getWrittenReviews(long userId) {
+        mReviewService.getMyWrittenReviews(userId, new NetworkCallback<List<Review>>() {
+            @Override
+            public void onSuccess(List<Review> result) {
+                mWrittenReviews = result;
+                if (mWrittenReviews.size() > 0) {
+                    setWrittenReviewsList();
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
+            }
+        });
+    }
+
     private void setUserInfo() {
         mNameInput.setText(mUser.getName());
         mEmailInput.setText(mUser.getEmail());
@@ -195,6 +224,12 @@ public class MyProfileFragment extends Fragment {
                 startActivityForResult(intent, AdvertisementsFragment.OPEN_AD_REQUEST_CODE);
             }
         });
+    }
+
+    private void setWrittenReviewsList() {
+        mReviewsWrittenList.setLayoutManager(new LinearLayoutManager(mContext));
+        ReviewAdapter adapter = new ReviewAdapter(mContext, mWrittenReviews, true);
+        mReviewsWrittenList.setAdapter(adapter);
     }
 
     @Override

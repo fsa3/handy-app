@@ -2,7 +2,10 @@ package is.hi.handy_app.Library;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +19,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     private Context mContext;
     private List<Review> mReviewList;
+    private boolean mShowHandyman;
 
-    public ReviewAdapter(Context context, List<Review> reviewList) {
+    public ReviewAdapter(Context context, List<Review> reviewList, boolean showHandyman) {
         mContext = context;
         mReviewList = reviewList;
+        mShowHandyman = showHandyman;
     }
 
     @NonNull
@@ -32,7 +37,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
         holder.review_author.setText(mReviewList.get(position).getAuthor().getName());
         holder.review_input.setText(mReviewList.get(position).getText());
+        holder.review_rating.setText(String.valueOf(mReviewList.get(position).getRating()));
 
+        if (mShowHandyman) {
+            holder.review_author.setText(mReviewList.get(position).getHandyman().getName());
+        }
     }
 
     @Override

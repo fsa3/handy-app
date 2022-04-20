@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -33,13 +36,16 @@ import java.util.stream.Stream;
 import is.hi.handy_app.Entities.Ad;
 import is.hi.handy_app.Entities.HandyUser;
 import is.hi.handy_app.Entities.PortfolioItem;
+import is.hi.handy_app.Entities.Review;
 import is.hi.handy_app.Entities.Trade;
 import is.hi.handy_app.Entities.User;
 import is.hi.handy_app.Library.AdsAdapter;
 import is.hi.handy_app.Library.PortfolioItemAdapter;
+import is.hi.handy_app.Library.ReviewAdapter;
 import is.hi.handy_app.Networking.NetworkCallback;
 import is.hi.handy_app.Services.AdService;
 import is.hi.handy_app.Services.PortfolioItemService;
+import is.hi.handy_app.Services.ReviewService;
 import is.hi.handy_app.Services.UserService;
 
 public class MyHandyProfileFragment extends Fragment {
@@ -50,9 +56,11 @@ public class MyHandyProfileFragment extends Fragment {
     private HandyUser mUser;
     private List<Ad> mAds;
     private List<PortfolioItem> mPortfolioItems;
+    private List<Review> mWrittenReviews;
     private UserService mUserService;
     private AdService mAdService;
     private PortfolioItemService mPortfolioItemService;
+    private ReviewService mReviewService;
 
     private EditText mNameInput;
     private EditText mEmailInput;
@@ -61,6 +69,7 @@ public class MyHandyProfileFragment extends Fragment {
     private EditText mHourlyRateInput;
     private GridView mActiveAds;
     private ListView mPortfolioItemsList;
+    private RecyclerView mReviewsWrittenList;
 
     private Button mSaveButton;
     private ProgressBar mSaveProgressBar;
@@ -81,6 +90,7 @@ public class MyHandyProfileFragment extends Fragment {
         mUserService = new UserService(mContext);
         mAdService = new AdService(mContext);
         mPortfolioItemService = new PortfolioItemService(mContext);
+        mReviewService = new ReviewService(mContext);
     }
 
     @Override
@@ -97,6 +107,7 @@ public class MyHandyProfileFragment extends Fragment {
         mHourlyRateInput = view.findViewById(R.id.edit_rate_myhProfile);
         mActiveAds = view.findViewById(R.id.adsTV_myhProfile);
         mPortfolioItemsList = view.findViewById(R.id.portfolioItems_myhProfile);
+        mReviewsWrittenList = view.findViewById(R.id.reviews_myhProfile);
         mSaveButton = view.findViewById(R.id.save_myhProfile);
         mSaveProgressBar = view.findViewById(R.id.myhprofile_save_progressbar);
         mDeleteAccountButton = view.findViewById(R.id.deleteAcc_myhProfile);
@@ -121,6 +132,8 @@ public class MyHandyProfileFragment extends Fragment {
         getAds(userId);
 
         getPortfolioItems(userId);
+
+        getWrittenReviews(userId);
 
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +247,23 @@ public class MyHandyProfileFragment extends Fragment {
         });
     }
 
+    private void getWrittenReviews(long userId) {
+        mReviewService.getMyWrittenReviews(userId, new NetworkCallback<List<Review>>() {
+            @Override
+            public void onSuccess(List<Review> result) {
+                mWrittenReviews = result;
+                if (mWrittenReviews.size() > 0) {
+                    setWrittenReviewsList();
+                }
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+
+            }
+        });
+    }
+
     private void setHandyUserInfo() {
         mNameInput.setText(mUser.getName());
         mEmailInput.setText(mUser.getEmail());
@@ -259,6 +289,12 @@ public class MyHandyProfileFragment extends Fragment {
         PortfolioItemAdapter adapter = new PortfolioItemAdapter(mContext, mPortfolioItems);
         mPortfolioItemsList.setAdapter(adapter);
         PortfolioItemAdapter.setDynamicHeight(mPortfolioItemsList);
+    }
+
+    private void setWrittenReviewsList() {
+        mReviewsWrittenList.setLayoutManager(new LinearLayoutManager(mContext));
+        ReviewAdapter adapter = new ReviewAdapter(mContext, mWrittenReviews, true);
+        mReviewsWrittenList.setAdapter(adapter);
     }
 
     @Override

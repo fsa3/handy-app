@@ -136,6 +136,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviews_myProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reviewsTV_myProfile" />
+
         <ListView
             android:id="@+id/reviewsLV_myProfile"
             android:layout_width="wrap_content"
@@ -151,20 +162,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="430dp"
             android:text="My active ads"
             android:textSize="18sp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/reviews_myProfile" />
 
         <GridView
             android:id="@+id/adsTV_myProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="460dp"
             android:horizontalSpacing="10dp"
             android:numColumns="2"
             android:padding="10dp"
@@ -173,7 +182,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
         <LinearLayout

@@ -2,6 +2,7 @@ package is.hi.handy_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -81,8 +82,8 @@ public class ReviewActivity extends AppCompatActivity {
                 mReviewList = (ArrayList) result;
                 mRecyclerView = findViewById(R.id.recycler_reviews);
                 mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.setLayoutManager(new GridLayoutManager(ReviewActivity.this,1));
-                mReviewAdapter = new ReviewAdapter(ReviewActivity.this,mReviewList);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(ReviewActivity.this));
+                mReviewAdapter = new ReviewAdapter(ReviewActivity.this,mReviewList, false);
                 mRecyclerView.setAdapter(mReviewAdapter);
 
 

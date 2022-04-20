@@ -34,18 +34,32 @@ public class ReviewService {
             public void onSuccess(String result) {
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Review>>(){}.getType();
-                List<Review> Reviews = gson.fromJson(result, listType);
-                callback.onSuccess(Reviews);
-
+                List<Review> reviews = gson.fromJson(result, listType);
+                callback.onSuccess(reviews);
             }
 
             @Override
             public void onaFailure(String errorString) {
-                callback.onaFailure("Failed to get Reviews" + errorString);
-
+                callback.onaFailure("Failed to get Reviews: " + errorString);
             }
         });
+    }
 
+    public void getMyWrittenReviews(long userId, NetworkCallback <List<Review>> callback){
+        mNetworkManager.sendRequest("/reviews-written/" + userId, Request.Method.GET, new NetworkCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Review>>(){}.getType();
+                List<Review> reviews = gson.fromJson(result, listType);
+                callback.onSuccess(reviews);
+            }
+
+            @Override
+            public void onaFailure(String errorString) {
+                callback.onaFailure("Failed to get Reviews: " + errorString);
+            }
+        });
     }
 
     public void saveReview (Review review ,NetworkCallback<Review> callback){
