@@ -1,4 +1,4 @@
-## Handy
+# Handy
 *Team 2 - product*
 
 ![](app/src/main/res/mipmap-xhdpi/handyicon.png)
@@ -18,10 +18,9 @@
 This repository contains the source code for the product Handy created by team 2 in
 Hugbúnaðarverkefni 2 2022.
 
-## Server needed to run the project ⚠️
+## Server needed to run the project  ⚠️
 This project relies on the project [Handy](https://github.com/fsa3/handy) for data.
 By running both projects on the same computer, data from the server should be available in the mobile
 application.
 
-By default the database is empty and at this stage it can only be populated by using the web-application in a browser.
-By running the server project and opening localhost on port `8080` user can edit the data to be displayed in the mobile app.
+By default the database is empty but can be populated using the Android app or the web-application in a browser.
